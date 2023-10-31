@@ -46,19 +46,18 @@
         <div class="admin-container"> <!-- Contenedor crema -->
             <div class="admin-buttons">
                 <div class="row">
+                <div class="col-md-4">
+    <a href="pedido.html">
+        <button class="btn btn-primary">Tomar Pedido</button>
+    </a>
+</div>
+
                     <div class="col-md-4">
-                        <button onclick="tomarPedidoClientes()" class="btn btn-primary">Tomar Pedido de Clientes</button>
+                        <button onclick="validarPedido()" class="btn btn-primary">Validar Pedido </button>
                     </div>
                     <div class="col-md-4">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary">Gestionar Pedido</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="#" onclick="validarPedido()">Validar Pedido</a>
-                                <a class="dropdown-item" href="#" onclick="confirmarProductos()">Confirmar Productos</a>
-                            </div>
+                        <button onclick="confirmarProducto()" class="btn btn-primary">Confirmar Producto </button>
+                    </div>
                         </div>
                     </div>
                 </div>

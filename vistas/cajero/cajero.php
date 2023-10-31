@@ -61,8 +61,8 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="#" onclick="registrarMesas()">Registrar Mesas</a>
-                                <a class="dropdown-item" href="#" onclick="listarMesas()">Listar Mesas</a>
+                            <a class="dropdown-item" href="registromesa.html" onclick="registrarMesas()">Registrar Mesas</a>
+                                <a class="dropdown-item" href="listarmesas.html" onclick="listarMesas()">Listar Mesas</a>
                             </div>
                         </div>
                     </div>
@@ -110,11 +110,6 @@
             // Puedes usar un formulario con una lista desplegable para seleccionar la sede
         }
 
-        function crearUsuario() {
-            // Agrega aquí la lógica para crear un nuevo usuario (mesero o cajero) en la base de datos
-            // Puedes usar un formulario para ingresar los datos del usuario
-        }
-
         function registrarMesas() {
             // Agrega aquí la lógica para registrar mesas en la base de datos
             // Puedes usar un formulario para ingresar los datos de las mesas
@@ -123,10 +118,6 @@
         function listarMesas() {
             // Agrega aquí la lógica para listar las mesas desde la base de datos
             // Puedes mostrar los datos en una tabla o de la forma que desees
-        }
-
-        function modificarNombreSede() {
-            // Agrega aquí la lógica para modificar el nombre de la sede
         }
 
         function verSede(sedeNumero) {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Mesas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../recursos/css/style.css">
+    <style>
+        body {
+            background: url('../../recursos/imagenes/liquorease.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .main-title {
+            font-size: 2.5rem;
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .crema-container {
+            background: #f9e9d8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">Lista de Mesas</h1>
+        <div class="crema-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Número de Mesa</th>
+                        <th>Estado</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody id="mesas-body">
+                    <!-- Aquí se generará la lista de mesas con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Realizar una solicitud Ajax para obtener los datos de las mesas
+            $.ajax({
+                url: '../../controladores/lista_mesas.php', // Ruta al archivo PHP
+                method: 'GET',
+                success: function(data) {
+                    // Insertar los datos en la tabla
+                    $('#mesas-body').html(data);
+                },
+                error: function() {
+                    $('#mesas-body').html('<tr><td colspan="4">No se encontraron mesas en la base de datos.</td></tr>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
