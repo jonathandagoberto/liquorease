@@ -1,6 +1,6 @@
 <?php
 // Incluye el archivo de conexión
-include('configuracion/conexion.php');
+include(__DIR__ . '/../configuracion/conexion.php');
 
 // Verifica si la conexión se realizó con éxito
 if ($conexion) {

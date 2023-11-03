@@ -88,9 +88,8 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="#" onclick="registrarProducto()">Registrar Producto Nuevo</a>
-                                <a class="dropdown-item" href="#" onclick="eliminarProducto()">Eliminar Producto</a>
-                                <a class="dropdown-item" href="#" onclick="listarProducto()">Listar Productos</a>
+                                <a class="dropdown-item" href="registro_producto.html" onclick="registrarProducto()">Registrar Producto Nuevo</a>
+                                <a class="dropdown-item" href="gestion_producto.html" onclick="listarYEliminarProducto()">Listar y Eliminar Productos</a>
                                 <a class="dropdown-item" href="#" onclick="editarProducto()">Editar Productos</a>
                             </div>
                         </div>
@@ -100,40 +99,6 @@
         </div>
     </div>
 
-    <script>
-        function generarInformeVentas() {
-            // Agrega aquí la lógica para generar un informe de ventas desde la base de datos
-        }
-
-        function crearInformeInventario() {
-            // Agrega aquí la lógica para crear un informe de inventario desde la base de datos
-            // Puedes usar un formulario con una lista desplegable para seleccionar la sede
-        }
-
-        function registrarMesas() {
-            // Agrega aquí la lógica para registrar mesas en la base de datos
-            // Puedes usar un formulario para ingresar los datos de las mesas
-        }
-
-        function listarMesas() {
-            // Agrega aquí la lógica para listar las mesas desde la base de datos
-            // Puedes mostrar los datos en una tabla o de la forma que desees
-        }
-
-        function verSede(sedeNumero) {
-            // Agrega aquí la lógica para ver los detalles de una sede en particular
-        }
-
-        function registrarProducto() {
-            // Agrega aquí la lógica para registrar un nuevo producto en la base de datos
-            // Puedes usar un formulario para ingresar los datos del producto
-        }
-
-        function eliminarProducto() {
-            // Agrega aquí la lógica para eliminar un producto de la base de datos
-            // Puedes mostrar una lista de productos y permitir la selección para eliminar
-        }
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

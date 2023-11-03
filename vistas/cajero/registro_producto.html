@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Mesa</title>
+    <title>Registrar Producto Nuevo</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../recursos/css/style.css">
     <style>
@@ -49,26 +49,42 @@
 </head>
 <body>
     <div class="container">
-        <div class="main-title">Registrar Mesa</div>
+        <div class="main-title">Registrar Producto Nuevo</div>
         <div class="admin-container">
-            <form action="../../controladores/registro_mesa.php" method="post">
+            <form action="../../controladores/registro_producto.php" method="post">
                 <div class="form-group">
-                    <label for="numero_mesa">Número de Mesa:</label>
-                    <input type="text" id="numero_mesa" name="numero_mesa" class="form-control" required>
+                    <label for="nombre_producto">Nombre del Producto:</label>
+                    <input type="text" id="nombre_producto" name="nombre_producto" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="text" id="cantidad" name="cantidad" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ubicacion_sede">Ubicación en Sede:</label>
+                    <input type="text" id="ubicacion_sede" name="ubicacion_sede" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+                    <input type="text" id="fecha_vencimiento" name="fecha_vencimiento" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="text" id="precio" name="precio" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" class="form-control" rows="4"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="estado">Estado:</label>
                     <select id="estado" name="estado" class="form-control">
                         <option value="disponible">Disponible</option>
-                        <option value="ocupada">Ocupada</option>
+                        <option value="agotado">Agotado</option>
                         <option value="en_espera">En Espera</option>
                     </select>
                 </div>
-                <div class "form-group">
-                    <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" name="descripcion" class="form-control" rows="4"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar Mesa</button>
+                <button type="submit" class="btn btn-primary">Registrar Producto</button>
             </form>
         </div>
     </div>
