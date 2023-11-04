@@ -4,8 +4,10 @@ include(__DIR__ . '/../configuracion/conexion.php');
 
 // Verifica si la conexión se realizó con éxito
 if ($conexion) {
-    // Consulta para obtener la lista de mesas
-    $sql = "SELECT id, numero_mesa, estado, descripcion FROM mesas";
+    // Consulta para obtener la lista de mesas junto con la información de la sede
+    $sql = "SELECT mesas.id, mesas.numero_mesa, mesas.estado, mesas.descripcion, sedes.nombre AS nombre_sede
+            FROM mesas
+            INNER JOIN sedes ON mesas.sede_id = sedes.id";
     $result = $conexion->query($sql);
 
     if ($result->num_rows > 0) {
@@ -15,6 +17,7 @@ if ($conexion) {
             echo "<td>" . $row["numero_mesa"] . "</td>";
             echo "<td>" . $row["estado"] . "</td>";
             echo "<td>" . $row["descripcion"] . "</td>";
+            echo "<td>" . $row["nombre_sede"] . "</td>";
             echo "</tr>";
         }
     } else {

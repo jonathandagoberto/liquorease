@@ -1,3 +1,14 @@
+<?php
+include('../../controladores/verificar_rol.php');
+session_start();
+
+if (!verificarRol('administrador')) {
+    // El usuario no tiene permisos de administrador, redirige o muestra un mensaje de error
+    header('Location: ../../pagina_de_error.php'); // Redirige a una página de error
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

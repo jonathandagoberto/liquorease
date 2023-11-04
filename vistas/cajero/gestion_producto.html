@@ -72,19 +72,19 @@
 $(document).ready(function() {
     // Realizar una solicitud Ajax para obtener los datos de los productos
     $.ajax({
-        url: '../../controladores/listar_productos.php', // Ruta al archivo PHP
-        method: 'GET',
-        success: function(data) {
-            // Insertar los datos en la tabla
-            $('#productos-body').html(data);
-        },
+    url: '../../controladores/listar_productos.php?' + new Date().getTime(), // Agregar aquí
+    method: 'GET',
+    success: function(data) {
+        // Insertar los datos en la tabla
+        $('#productos-body').html(data);
+    },
         error: function() {
             $('#productos-body').html('<tr><td colspan="7">No se encontraron productos en la base de datos.</td></tr>');
         }
     });
 
-    // Manejar clics en el botón "Eliminar Producto"
-    $('#boton-eliminar').click(function() {
+// Manejar clics en el botón "Eliminar Producto"
+$('#boton-eliminar').click(function() {
         var idProducto = $('#eliminar-producto').val();
         eliminarProducto(idProducto);
     });
@@ -95,14 +95,9 @@ $(document).ready(function() {
             method: 'DELETE',
             success: function(response) {
                 if (response.success) {
-                    // Redirige a gestion_producto.html si la eliminación fue exitosa
+                    // Redirige a gestion_producto.html
                     window.location.href = '../vistas/cajero/gestion_producto.html';
-                } else {
-                    alert(response.message); // Muestra un mensaje de error en caso de error
                 }
-            },
-            error: function() {
-                alert('Error al eliminar el producto. Inténtalo de nuevo.');
             }
         });
     }

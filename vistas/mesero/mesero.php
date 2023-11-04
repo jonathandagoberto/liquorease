@@ -1,3 +1,14 @@
+<?php
+include('../../controladores/verificar_rol.php');
+session_start();
+
+if (!verificarRol('mesero')) {
+    // El usuario no tiene permisos de mesero, redirige o muestra un mensaje de error
+    header('Location: ../../pagina_de_error.php'); // Redirige a una página de error
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,19 +57,16 @@
         <div class="admin-container"> <!-- Contenedor crema -->
             <div class="admin-buttons">
                 <div class="row">
-                <div class="col-md-4">
-    <a href="pedido.html">
-        <button class="btn btn-primary">Tomar Pedido</button>
-    </a>
-</div>
-
                     <div class="col-md-4">
-                        <button onclick="validarPedido()" class="btn btn-primary">Validar Pedido </button>
+                        <a href="pedido.html">
+                            <button class="btn btn-primary">Tomar Pedido</button>
+                        </a>
                     </div>
                     <div class="col-md-4">
-                        <button onclick="confirmarProducto()" class="btn btn-primary">Confirmar Producto </button>
+                        <button onclick="validarPedido()" class="btn btn-primary">Validar Pedido</button>
                     </div>
-                        </div>
+                    <div class="col-md-4">
+                        <button onclick="confirmarProducto()" class="btn btn-primary">Confirmar Producto</button>
                     </div>
                 </div>
             </div>
@@ -84,3 +92,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+

@@ -11,7 +11,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -20,6 +19,98 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `liquorease`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sedes`
+--
+
+CREATE TABLE `sedes` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- Volcado de datos para la tabla `sedes`
+--
+
+INSERT INTO `sedes` (`id`, `nombre`) VALUES
+(1, 'Sede 1'),
+(2, 'Sede 2'),
+(3, 'Sede 3'),
+(4, 'Sede 4');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mesas` con asignación a sedes
+--
+
+CREATE TABLE `mesas` (
+  `id` int(11) NOT NULL,
+  `numero_mesa` int(11) NOT NULL,
+  `estado` varchar(20) DEFAULT 'disponible',
+  `descripcion` varchar(255) DEFAULT NULL,
+  `sede_id` int(11) NOT NULL,
+  FOREIGN KEY (`sede_id`) REFERENCES `sedes`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Para agregar 15 mesas a Sede 1
+INSERT INTO mesas (numero_mesa, estado, descripcion, sede_id) VALUES
+(1, 'disponible', 'Mesa 1 de Sede 1', 1),
+(2, 'disponible', 'Mesa 2 de Sede 1', 1),
+(3, 'disponible', 'Mesa 3 de Sede 1', 1),
+(4, 'disponible', 'Mesa 4 de Sede 1', 1),
+(5, 'disponible', 'Mesa 5 de Sede 1', 1),
+(6, 'disponible', 'Mesa 6 de Sede 1', 1),
+(7, 'disponible', 'Mesa 7 de Sede 1', 1),
+(8, 'disponible', 'Mesa 8 de Sede 1', 1),
+(9, 'disponible', 'Mesa 9 de Sede 1', 1),
+(10, 'disponible', 'Mesa 10 de Sede 1', 1),
+(11, 'disponible', 'Mesa 11 de Sede 1', 1),
+(12, 'disponible', 'Mesa 12 de Sede 1', 1),
+(13, 'disponible', 'Mesa 13 de Sede 1', 1),
+(14, 'disponible', 'Mesa 14 de Sede 1', 1),
+(15, 'disponible', 'Mesa 15 de Sede 1', 1);
+
+-- Para agregar 15 mesas a Sede 2
+INSERT INTO mesas (numero_mesa, estado, descripcion, sede_id) VALUES
+(1, 'disponible', 'Mesa 1 de Sede 2', 2),
+(2, 'disponible', 'Mesa 2 de Sede 2', 2),
+(3, 'disponible', 'Mesa 3 de Sede 2', 2),
+(4, 'disponible', 'Mesa 4 de Sede 2', 2),
+(5, 'disponible', 'Mesa 5 de Sede 2', 2),
+(6, 'disponible', 'Mesa 6 de Sede 2', 2),
+(7, 'disponible', 'Mesa 7 de Sede 2', 2),
+(8, 'disponible', 'Mesa 8 de Sede 2', 2),
+(9, 'disponible', 'Mesa 9 de Sede 2', 2),
+(10, 'disponible', 'Mesa 10 de Sede 2', 2),
+(11, 'disponible', 'Mesa 11 de Sede 2', 2),
+(12, 'disponible', 'Mesa 12 de Sede 2', 2),
+(13, 'disponible', 'Mesa 13 de Sede 2', 2),
+(14, 'disponible', 'Mesa 14 de Sede 2', 2),
+(15, 'disponible', 'Mesa 15 de Sede 2', 2);
+
+-- Para agregar 15 mesas a Sede 3
+INSERT INTO mesas (numero_mesa, estado, descripcion, sede_id) VALUES
+(1, 'disponible', 'Mesa 1 de Sede 3', 3),
+(2, 'disponible', 'Mesa 2 de Sede 3', 3),
+(3, 'disponible', 'Mesa 3 de Sede 3', 3),
+(4, 'disponible', 'Mesa 4 de Sede 3', 3),
+(5, 'disponible', 'Mesa 5 de Sede 3', 3),
+(6, 'disponible', 'Mesa 6 de Sede 3', 3),
+(7, 'disponible', 'Mesa 7 de Sede 3', 3),
+(8, 'disponible', 'Mesa 8 de Sede 3', 3),
+(9, 'disponible', 'Mesa 9 de Sede 3', 3),
+(10, 'disponible', 'Mesa 10 de Sede 3', 3),
+(11, 'disponible', 'Mesa 11 de Sede 3', 3),
+(12, 'disponible', 'Mesa 12 de Sede 3', 3),
+(13, 'disponible', 'Mesa 13 de Sede 3', 3),
+(14, 'disponible', 'Mesa 14 de Sede 3', 3),
+(15, 'disponible', 'Mesa 15 de Sede 3', 3);
+
+
 
 -- --------------------------------------------------------
 
@@ -67,30 +158,7 @@ INSERT INTO `inventario` (`id`, `nombre_producto`, `cantidad`, `ubicacion_sede`,
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `mesas`
---
-
-CREATE TABLE `mesas` (
-  `id` int(11) NOT NULL,
-  `numero_mesa` int(11) NOT NULL,
-  `estado` varchar(20) DEFAULT 'disponible',
-  `descripcion` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `mesas`
---
-
-INSERT INTO `mesas` (`id`, `numero_mesa`, `estado`, `descripcion`) VALUES
-(1, 1, 'disponible', 'Mesa 1 disponible'),
-(2, 2, 'disponible', 'Mesa 2 disponible'),
-(3, 3, 'disponible', 'Mesa 3 disponible'),
-(4, 4, 'disponible', 'Mesa 4 disponible');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `usuarios` con registro de sesiones
 --
 
 CREATE TABLE `usuarios` (
@@ -101,7 +169,9 @@ CREATE TABLE `usuarios` (
   `email` varchar(255) DEFAULT NULL,
   `rol` enum('administrador','cajero','mesero') NOT NULL,
   `usuario` varchar(50) NOT NULL,
-  `contrasena` varchar(255) NOT NULL
+  `contrasena` varchar(255) NOT NULL,
+  `hora_inicio_sesion` datetime DEFAULT NULL,
+  `hora_finalizacion_sesion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -144,12 +214,6 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `inventario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT de la tabla `mesas`
---
-ALTER TABLE `mesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

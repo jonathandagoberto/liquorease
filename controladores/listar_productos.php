@@ -21,7 +21,6 @@ if ($result->num_rows > 0) {
         echo '<td>' . $row["precio"] . '</td>';
         echo '<td>' . $row["descripcion"] . '</td>';
         echo '<td>' . $row["estado"] . '</td>';
-        echo '<td><a href="eliminar_producto.php?id=' . $row["id"] . '" class="btn btn-danger">Eliminar</a></td>';
         echo '</tr>';
     }
     echo '</tbody>';

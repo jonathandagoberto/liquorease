@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('controladores/verificar_rol.php');
 
 if (isset($_SESSION['usuario'])) {
     header('Location: vistas/admin/admin.php');
@@ -23,10 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($row) {
             // Usuario y contraseña válidos, redirige según el rol
             if ($rol === 'administrador' && $row['rol'] === 'administrador') {
+                $_SESSION['rol'] = 'administrador'; // Establece el rol en la sesión
                 header('Location: vistas/admin/admin.php');
             } elseif ($rol === 'cajero' && $row['rol'] === 'cajero') {
+                $_SESSION['rol'] = 'cajero'; // Establece el rol en la sesión
                 header('Location: vistas/cajero/cajero.php');
             } elseif ($rol === 'mesero' && $row['rol'] === 'mesero') {
+                $_SESSION['rol'] = 'mesero'; // Establece el rol en la sesión
                 header('Location: vistas/mesero/mesero.php');
             } else {
                 echo "El usuario no tiene el rol seleccionado.";
@@ -131,4 +135,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </script>
 </body>
 </html>
-
