@@ -49,12 +49,18 @@ if (!verificarRol('cajero')) {
             color: #fff;
             padding: 15px 25px; /* Botones más largos */
         }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="main-title">Bienvenido, Cajero</div>
-        <div class="admin-container"> <!-- Contenedor crema -->
+<a href="../../controladores/logout.php" class="btn btn-danger btn-lg logout-button">Salir</a>
+<div class="container">
+    <div class="main-title">Bienvenido, Cajero</div>
+    <div class="admin-container">
             <div class="admin-buttons">
                 <div class="row">
                     <div class="col-md-4">
@@ -78,9 +84,9 @@ if (!verificarRol('cajero')) {
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="btn-group">
+                        <div aclass="btn-group">
                             <button type="button" class="btn btn-primary">Gestionar Sedes</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
@@ -116,3 +122,4 @@ if (!verificarRol('cajero')) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+

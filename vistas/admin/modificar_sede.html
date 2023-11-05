@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar Nombre de Sede</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../recursos/css/style.css">
+    <style>
+        body {
+            background: url('../../recursos/imagenes/liquorease.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .main-title {
+            font-size: 2.5rem;
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .admin-container {
+            background: #f9e9d8;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .admin-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .admin-buttons .btn {
+            margin: 5px;
+            background-color: #e84601;
+            border-color: #e84601;
+            color: #fff;
+            padding: 15px 25px;
+        }
+        .crema-container {
+            background: #f9e9d8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px; /* Agrega margen en la parte superior */
+            text-align: center; /* Alinea el contenido al centro */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-title">Modificar Nombre De Sede</div>
+        <div class="admin-container">
+            <form action="../../controladores/modificacion_sede.php" method="post">
+                <div class="form-group">
+            <label for="sede_id">Seleccione la sede a modificar:</label>
+            <select name="sede_id" id="sede_id">
+                <option value="1">Sede 1</option>
+                <option value="2">Sede 2</option>
+                <option value="3">Sede 3</option>
+                <option value="4">Sede 4</option>
+            </select>
+            <br>
+            <label for="nuevo_nombre">Nuevo nombre:</label>
+            <input type="text" name="nuevo_nombre" id="nuevo_nombre">
+            <br>
+            <input type="submit" value="Modificar">
+        </form>
+    </div>
+</body>
+</html>

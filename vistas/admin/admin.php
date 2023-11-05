@@ -7,6 +7,23 @@ if (!verificarRol('administrador')) {
     header('Location: ../../pagina_de_error.php'); // Redirige a una página de error
     exit();
 }
+
+// Incluye el archivo de conexión utilizando la ruta relativa
+include( '../../configuracion/conexion.php');
+
+// Consulta para obtener la lista de sedes
+$sql = "SELECT id, nombre FROM sedes";
+$resultado = $conexion->query($sql);
+
+$sedes = array();
+
+if ($resultado->num_rows > 0) {
+    while ($fila = $resultado->fetch_assoc()) {
+        $sedes[] = $fila;
+    }
+}
+
+$conexion->close();
 ?>
 
 <!DOCTYPE html>
@@ -47,11 +64,17 @@ if (!verificarRol('administrador')) {
             background-color: #e84601; /* Color rojo */
             border-color: #e84601; /* Color rojo */
             color: #fff;
-            padding: 15px 25px; /* Botones más largos */
+            padding: 20px 25px; /* Botones más largos */
+        }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
     </style>
 </head>
 <body>
+    <a href="../../controladores/logout.php" class="btn btn-danger btn-lg logout-button">Salir</a>
     <div class="container">
         <div class="main-title">Bienvenido, Administrador</div>
         <div class="admin-container"> <!-- Contenedor crema -->
@@ -75,8 +98,8 @@ if (!verificarRol('administrador')) {
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="#" onclick="registrarMesas()">Registrar Mesas</a>
-                                <a class="dropdown-item" href="#" onclick="listarMesas()">Listar Mesas</a>
+                                <a class="dropdown-item" href="registromesa.html" onclick="registrarMesas()">Registrar Mesas</a>
+                                <a class="dropdown-item" href="listarmesas.html" onclick="listarMesas()">Listar Mesas</a>
                             </div>
                         </div>
                     </div>
@@ -87,11 +110,10 @@ if (!verificarRol('administrador')) {
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="#" onclick="modificarNombreSede()">Modificar Nombre de Sede</a>
-                                <a class="dropdown-item" href="#" onclick="verSede(1)">Ver Sede 1</a>
-                                <a class="dropdown-item" href="#" onclick="verSede(2)">Ver Sede 2</a>
-                                <a class="dropdown-item" href="#" onclick="verSede(3)">Ver Sede 3</a>
-                                <a class="dropdown-item" href="#" onclick="verSede(4)">Ver Sede 4</a>
+                                <a class="dropdown-item" href="modificar_sede.html" onclick="modificarNombreSede()">Modificar Nombre de Sede</a>
+                                <?php foreach ($sedes as $sede) { ?>
+                                    <a class="dropdown-item" href="#" onclick="verSede(<?php echo $sede['id']; ?>)"><?php echo $sede['nombre']; ?></a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -114,52 +136,9 @@ if (!verificarRol('administrador')) {
         </div>
     </div>
 
-    <script>
-        function generarInformeVentas() {
-            // Agrega aquí la lógica para generar un informe de ventas desde la base de datos
-        }
-
-        function crearInformeInventario() {
-            // Agrega aquí la lógica para crear un informe de inventario desde la base de datos
-            // Puedes usar un formulario con una lista desplegable para seleccionar la sede
-        }
-
-        function crearUsuario() {
-            // Agrega aquí la lógica para crear un nuevo usuario (mesero o cajero) en la base de datos
-            // Puedes usar un formulario para ingresar los datos del usuario
-        }
-
-        function registrarMesas() {
-            // Agrega aquí la lógica para registrar mesas en la base de datos
-            // Puedes usar un formulario para ingresar los datos de las mesas
-        }
-
-        function listarMesas() {
-            // Agrega aquí la lógica para listar las mesas desde la base de datos
-            // Puedes mostrar los datos en una tabla o de la forma que desees
-        }
-
-        function modificarNombreSede() {
-            // Agrega aquí la lógica para modificar el nombre de la sede
-        }
-
-        function verSede(sedeNumero) {
-            // Agrega aquí la lógica para ver los detalles de una sede en particular
-        }
-
-        function registrarProducto() {
-            // Agrega aquí la lógica para registrar un nuevo producto en la base de datos
-            // Puedes usar un formulario para ingresar los datos del producto
-        }
-
-        function eliminarProducto() {
-            // Agrega aquí la lógica para eliminar un producto de la base de datos
-            // Puedes mostrar una lista de productos y permitir la selección para eliminar
-        }
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+

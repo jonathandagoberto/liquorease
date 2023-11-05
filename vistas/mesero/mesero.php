@@ -49,9 +49,15 @@ if (!verificarRol('mesero')) {
             color: #fff;
             padding: 15px 25px; /* Botones más largos */
         }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
+    <a href="../../controladores/logout.php" class="btn btn-danger btn-lg logout-button">Salir</a>
     <div class="container">
         <div class="main-title">Bienvenido, Mesero</div>
         <div class="admin-container"> <!-- Contenedor crema -->
@@ -92,4 +98,3 @@ if (!verificarRol('mesero')) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-

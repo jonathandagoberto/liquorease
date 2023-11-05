@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         // Registro exitoso, redirige de nuevo a la página de registro de mesas
-        header("Location: ../vistas/cajero/registromesa.html");
+        header("Location: ../vistas/admin/registromesa.html");
         exit();
     } else {
         // Error en el registro
@@ -27,8 +27,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conexion->close();
 }
 ?>
-
-
-
-
-

@@ -21,23 +21,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result) {
         $row = mysqli_fetch_assoc($result);
 
-        if ($row) {
-            // Usuario y contraseña válidos, redirige según el rol
-            if ($rol === 'administrador' && $row['rol'] === 'administrador') {
-                $_SESSION['rol'] = 'administrador'; // Establece el rol en la sesión
-                header('Location: vistas/admin/admin.php');
-            } elseif ($rol === 'cajero' && $row['rol'] === 'cajero') {
-                $_SESSION['rol'] = 'cajero'; // Establece el rol en la sesión
-                header('Location: vistas/cajero/cajero.php');
-            } elseif ($rol === 'mesero' && $row['rol'] === 'mesero') {
-                $_SESSION['rol'] = 'mesero'; // Establece el rol en la sesión
-                header('Location: vistas/mesero/mesero.php');
-            } else {
-                echo "El usuario no tiene el rol seleccionado.";
-            }
-        } else {
-            echo "Usuario y/o contraseña incorrectos. Volver a intentar.";
-        }
+// Después de validar el usuario y contraseña
+// Después de validar el usuario y contraseña
+if ($row) {
+    // Usuario y contraseña válidos
+
+    // Registra la hora de inicio de sesión para el usuario actual
+    $horaInicioSesion = date('Y-m-d H:i:s');
+    $query = "UPDATE usuarios SET hora_inicio_sesion = '$horaInicioSesion' WHERE usuario = '$username'";
+    mysqli_query($conexion, $query);
+
+    // Establece el rol en la sesión
+    $_SESSION['rol'] = $row['rol'];
+
+    // Redirige a la página correspondiente según el rol
+    if ($row['rol'] === 'administrador') {
+        header('Location: vistas/admin/admin.php');
+    } elseif ($row['rol'] === 'cajero') {
+        header('Location: vistas/cajero/cajero.php');
+    } elseif ($row['rol'] === 'mesero') {
+        header('Location: vistas/mesero/mesero.php');
+    }
+} else {
+    echo "Usuario y/o contraseña incorrectos. Volver a intentar.";
+}
+
     } else {
         echo "Error en la consulta: " . mysqli_error($conexion);
     }
