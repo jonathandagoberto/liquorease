@@ -12,6 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descripcion = $_POST["descripcion"];
     $estado = $_POST["estado"];
 
+        // Verifica que la cantidad no sea mayor que 50
+        if ($cantidad <= 50) {
     // Evita posibles ataques de inyección SQL utilizando sentencias preparadas
     $stmt = $conexion->prepare("INSERT INTO inventario (nombre_producto, cantidad, ubicacion_sede, fecha_vencimiento, precio, descripcion, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssss", $nombre_producto, $cantidad, $ubicacion_sede, $fecha_vencimiento, $precio, $descripcion, $estado);
@@ -28,5 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Cierra la conexión a la base de datos
     $stmt->close();
     $conexion->close();
+}
 }
 ?>

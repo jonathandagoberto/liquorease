@@ -74,7 +74,7 @@ $conexion->close();
     </style>
 </head>
 <body>
-    <a href="../../controladores/logout.php" class="btn btn-danger btn-lg logout-button">Salir</a>
+    <a href="../../login.php" class="btn btn-danger btn-lg logout-button">Salir</a>
     <div class="container">
         <div class="main-title">Bienvenido, Administrador</div>
         <div class="admin-container"> <!-- Contenedor crema -->
@@ -87,7 +87,14 @@ $conexion->close();
                         <button onclick="crearInformeInventario()" class="btn btn-primary">Crear Informe de Inventario</button>
                     </div>
                     <div class="col-md-4">
-                        <button onclick="crearUsuario()" class="btn btn-primary">Crear Usuario</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" >Gestionar Usuario</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
+                                <a class="dropdown-item" href="#" onclick="crearUsuario()">Crear Usuario</a>
+                                <a class="dropdown-item" href="#" onclick="editarUsuario()">Editar Usuario</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -106,7 +113,7 @@ $conexion->close();
                     <div class="col-md-4">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary">Gestionar Sedes</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
@@ -119,15 +126,14 @@ $conexion->close();
                     </div>
                     <div class="col-md-4">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary">Gestionar Productos</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn">Gestionar Productos</button>
+                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="#" onclick="registrarProducto()">Registrar Producto Nuevo</a>
-                                <a class="dropdown-item" href="#" onclick="eliminarProducto()">Eliminar Producto</a>
-                                <a class="dropdown-item" href="#" onclick="listarProducto()">Listar Productos</a>
-                                <a class="dropdown-item" href="#" onclick="editarProducto()">Editar Productos</a>
+                                <a class="dropdown-item" href="registro_producto.html" onclick="registrarProducto()">Registrar Producto Nuevo</a>
+                                <a class="dropdown-item" href="gestion_producto.html" onclick="listarYEliminarProducto()">Listar y Eliminar Productos</a>
+                                <a class="dropdown-item" href="editar_producto.html" onclick="editarProducto()">Editar Productos</a>
                             </div>
                         </div>
                     </div>
@@ -141,4 +147,3 @@ $conexion->close();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-

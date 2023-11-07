@@ -20,90 +20,42 @@
             padding: 20px;
             text-align: center;
         }
-        .admin-container {
-            background: #f9e9d8;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .admin-buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .admin-buttons .btn {
-            margin: 5px;
-            background-color: #e84601;
-            border-color: #e84601;
-            color: #fff;
-            padding: 15px 25px;
-        }
         .crema-container {
             background: #f9e9d8;
             padding: 20px;
             border-radius: 10px;
-            margin-top: 20px; /* Agrega margen en la parte superior */
-            text-align: center; /* Alinea el contenido al centro */
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="main-title">Toma de Pedidos</div>
-    </div>
-    <div class="crema-container"> <!-- Contenedor con fondo crema -->
-        <form action="../../controladores/procesar_pedido.php" method="post">
-            <div class="form-group"> <!-- Contenedor para un trago y cantidad -->
-                <label for="trago1">Trago 1:</label>
-                <select name="trago1" id="trago1" class="form-control">
-                    <!-- Opciones para el trago 1 -->
-                </select>
-            </div>
-            
-            <div class="form-group"> <!-- Contenedor para un trago y cantidad -->
-                <label for="trago2">Trago 2:</label>
-                <select name="trago2" id="trago2" class="form-control">
-                    <!-- Opciones para el trago 2 -->
-                </select>
-            </div>
-            
-            <div class="form-group"> <!-- Contenedor para un trago y cantidad -->
-                <label for="trago3">Trago 3:</label>
-                <select name="trago3" id="trago3" class="form-control">
-                    <!-- Opciones para el trago 3 -->
-                </select>
-            </div>
-            
-            <div class="form-group"> <!-- Contenedor para un trago y cantidad -->
-                <label for="trago4">Trago 4:</label>
-                <select name="trago4" id="trago4" class="form-control">
-                    <!-- Opciones para el trago 4 -->
-                </select>
-            </div>
-            
-            <div class="form-group"> <!-- Contenedor para un trago y cantidad -->
-                <label for="trago5">Trago 5:</label>
-                <select name="trago5" id="trago5" class="form-control">
-                    <!-- Opciones para el trago 5 -->
-                </select>
-            </div>
-            
-            <div class="form-group"> <!-- Contenedor para un trago y cantidad -->
-                <label for="trago6">Trago 6:</label>
-                <select name="trago6" id="trago6" class="form-control">
-                    <!-- Opciones para el trago 6 -->
-                </select>
-            </div>
-            
-            
-
-            <button type="submit" name="accion" value="tomar_pedido">Tomar Pedido</button>
-        </form>
+        <div class="main-title">
+            <h1>Realizar Pedido</h1>
+        </div>
+        <div class="crema-container">
+            <form action="../../procesar_pedido.php" method="post">
+                <div class="form-group">
+                    <label for="producto_id">ID del Producto:</label>
+                    <input type="text" name="producto_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre_producto">Nombre del Producto:</label>
+                    <input type="text" name="nombre_producto" required>
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" name="cantidad" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Registrar Pedido">
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>
-
-
-
-
-

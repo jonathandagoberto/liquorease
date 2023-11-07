@@ -12,14 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE" && isset($_GET["id"])) {
 
     if ($stmt->execute()) {
         // Eliminación exitosa
-        $response = array(
-            'success' => true,
-            'message' => 'Producto eliminado exitosamente'
-        );
 
-        // Devuelve la respuesta JSON
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        // Cierra la conexión a la base de datos
+        $stmt->close();
+        $conexion->close();
+
+        // Redirige a la página actual con un retraso de 1 segundo
+        header("Refresh: 1; url=../vistas/cajero/listar_eliminar_productos.html");
     } else {
         // Error en la eliminación
         $response = array(
@@ -30,13 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE" && isset($_GET["id"])) {
         // Devuelve la respuesta JSON
         header('Content-Type: application/json');
         echo json_encode($response);
-    }
 
-    // Cierra la conexión a la base de datos
-    $stmt->close();
-    $conexion->close();
+        // Cierra la conexión a la base de datos
+        $stmt->close();
+        $conexion->close();
+    }
 }
 ?>
+
 
 
 

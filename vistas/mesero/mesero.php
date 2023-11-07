@@ -57,7 +57,7 @@ if (!verificarRol('mesero')) {
     </style>
 </head>
 <body>
-    <a href="../../controladores/logout.php" class="btn btn-danger btn-lg logout-button">Salir</a>
+    <a href="../../login.php" class="btn btn-danger btn-lg logout-button">Salir</a>
     <div class="container">
         <div class="main-title">Bienvenido, Mesero</div>
         <div class="admin-container"> <!-- Contenedor crema -->

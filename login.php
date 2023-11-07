@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row = mysqli_fetch_assoc($result);
 
 // Después de validar el usuario y contraseña
-// Después de validar el usuario y contraseña
 if ($row) {
     // Usuario y contraseña válidos
 
@@ -93,15 +92,15 @@ if ($row) {
                             </div>
                         </div>
                         <div class="form-style-agile">
-                            <label style="color:#e84601;">Password</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1" style="background-color: white">
-                                        <span style="color:#e84601" class="fa  fa-unlock-alt"></span>
-                                    </span>
+                        <label style="color:#e84601;">Password</label>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="background-color: white">
+            <span style="color:#e84601" class="fa  fa-unlock-alt"></span>
+        </span>
                                 </div>
                                 <!-- Cambio el input type a text para mostrar el botón verde o rojo -->
-                                <input type="text" class="form-control" placeholder="Digitar su clave de 6 dígitos" aria-label="Password" name="Password" id="txt_pass">
+                                <input type="password" class="form-control" placeholder="Digitar su clave de 6 dígitos" aria-label="Password" name="Password" id="txt_pass">
                                 <!-- Botón para mostrar si la contraseña tiene 6 caracteres -->
                                 <span class="password-button" id="password-button"></span>
                             </div>
