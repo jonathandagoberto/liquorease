@@ -57,21 +57,8 @@ if ($row) {
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="recursos/css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="recursos/css/login.css" type="text/css" media="all" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <style>
-        body {
-            background: url('recursos/imagenes/liquorease.jpeg') no-repeat center center fixed;
-            background-size: cover;
-        }
-        /* Estilo para el botón de la contraseña */
-        .password-button {
-        margin-top: 10px;
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        border-radius: 50%;
-        }
-    </style>
 </head>
 <body>
     <div class="d-flex justify-content-center align-items-center vh-100">
@@ -128,17 +115,6 @@ if ($row) {
     </div>
     
     <!-- JavaScript para verificar la longitud de la contraseña y cambiar el botón de color -->
-    <script>
-    const passwordInput = document.getElementById('txt_pass');
-    const passwordButton = document.getElementById('password-button');
-
-    passwordInput.addEventListener('input', function() {
-        if (passwordInput.value.length === 6) {
-            passwordButton.style.backgroundColor = 'green';
-        } else {
-            passwordButton.style.backgroundColor = 'red';
-        }
-    });
-</script>
+    <script src="recursos/js/login.js"></script>
 </body>
 </html>

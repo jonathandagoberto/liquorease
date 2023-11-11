@@ -15,46 +15,7 @@ if (!verificarRol('mesero')) {
     <meta charset="UTF-8">
     <title>Bienvenido, Mesero</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../recursos/css/style.css">
-    <style>
-        body {
-            background: url('../../recursos/imagenes/liquorease.jpeg') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .main-title {
-            font-size: 2.5rem;
-            background: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        .admin-container {
-            background: #f9e9d8; /* Color crema */
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .admin-buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .admin-buttons .btn {
-            margin: 5px;
-            background-color: #e84601; /* Color rojo */
-            border-color: #e84601; /* Color rojo */
-            color: #fff;
-            padding: 15px 25px; /* Botones más largos */
-        }
-        .logout-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="../../recursos/css/style.css">
 </head>
 <body>
     <a href="../../login.php" class="btn btn-danger btn-lg logout-button">Salir</a>

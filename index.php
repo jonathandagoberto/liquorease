@@ -5,40 +5,8 @@
     <title>Bienvenido a Liquorease</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="recursos/css/style.css">
+    <link rel="stylesheet" href="recursos/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <style>
-        body {
-            background: url('recursos/imagenes/liquorease.jpeg') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .bebida {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .card {
-            border: none; 
-        }
-        .card-title {
-            font-size: 1.25rem;
-            margin: 0;
-            padding: 10px 0;
-            background: #333;
-            color: #fff;
-        }
-        .card-img-top {
-            object-fit: cover;
-            height: 200px; 
-        }
-        .main-title {
-            font-size: 2.5rem;
-            background: #333;
-            color: #fff;
-            padding: 20px;
-        }
-    </style>
 </head>
 <body>
     <div class="container text-center">

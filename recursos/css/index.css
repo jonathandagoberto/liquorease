@@ -1,0 +1,18 @@
+.bebida {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.card {
+    border: none; 
+}
+.card-title {
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 10px 0;
+    background: #333;
+    color: #fff;
+}
+.card-img-top {
+    object-fit: cover;
+    height: 200px; 
+}
