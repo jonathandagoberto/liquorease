@@ -14,37 +14,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rol = $_POST['rol'];
 
     // Realiza la validación del usuario y contraseña en la base de datos
-    $query = "SELECT usuario, contrasena, rol FROM usuarios WHERE usuario = '$username' AND contrasena = '$password'";
+    $query = "SELECT usuario, contrasena, rol FROM usuarios WHERE usuario = '$username'";
 
     $result = mysqli_query($conexion, $query);
 
     if ($result) {
         $row = mysqli_fetch_assoc($result);
 
-// Después de validar el usuario y contraseña
-if ($row) {
-    // Usuario y contraseña válidos
+        // Después de validar el usuario
+        if ($row) {
+            // Verifica la contraseña utilizando password_verify
+            if (password_verify($password, $row['contrasena'])) {
+                // Contraseña válida
 
-    // Registra la hora de inicio de sesión para el usuario actual
-    $horaInicioSesion = date('Y-m-d H:i:s');
-    $query = "UPDATE usuarios SET hora_inicio_sesion = '$horaInicioSesion' WHERE usuario = '$username'";
-    mysqli_query($conexion, $query);
+                // Registra la hora de inicio de sesión para el usuario actual
+                $horaInicioSesion = date('Y-m-d H:i:s');
+                $query = "UPDATE usuarios SET hora_inicio_sesion = '$horaInicioSesion' WHERE usuario = '$username'";
+                mysqli_query($conexion, $query);
 
-    // Establece el rol en la sesión
-    $_SESSION['rol'] = $row['rol'];
+                // Establece el rol en la sesión
+                $_SESSION['rol'] = $row['rol'];
 
-    // Redirige a la página correspondiente según el rol
-    if ($row['rol'] === 'administrador') {
-        header('Location: vistas/admin/admin.php');
-    } elseif ($row['rol'] === 'cajero') {
-        header('Location: vistas/cajero/cajero.php');
-    } elseif ($row['rol'] === 'mesero') {
-        header('Location: vistas/mesero/mesero.php');
-    }
-} else {
-    echo "Usuario y/o contraseña incorrectos. Volver a intentar.";
-}
-
+                // Redirige a la página correspondiente según el rol
+                if ($row['rol'] === 'administrador') {
+                    header('Location: vistas/admin/admin.php');
+                } elseif ($row['rol'] === 'cajero') {
+                    header('Location: vistas/cajero/cajero.php');
+                } elseif ($row['rol'] === 'mesero') {
+                    header('Location: vistas/mesero/mesero.php');
+                }
+            } else {
+                echo "Contraseña incorrecta. Volver a intentar.";
+            }
+        } else {
+            echo "Usuario no encontrado. Volver a intentar.";
+        }
     } else {
         echo "Error en la consulta: " . mysqli_error($conexion);
     }
@@ -80,17 +84,19 @@ if ($row) {
                         </div>
                         <div class="form-style-agile">
                         <label style="color:#e84601;">Password</label>
-<div class="input-group mb-3">
+                        <div class="input-group mb-3">
     <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1" style="background-color: white">
             <span style="color:#e84601" class="fa  fa-unlock-alt"></span>
         </span>
-                                </div>
-                                <!-- Cambio el input type a text para mostrar el botón verde o rojo -->
-                                <input type="password" class="form-control" placeholder="Digitar su clave de 6 dígitos" aria-label="Password" name="Password" id="txt_pass">
-                                <!-- Botón para mostrar si la contraseña tiene 6 caracteres -->
-                                <span class="password-button" id="password-button"></span>
-                            </div>
+    </div>
+    <!-- Cambio el input type a text para mostrar el botón verde o rojo -->
+    <input type="password" class="form-control" placeholder="Digitar su clave de 6 dígitos" aria-label="Password" name="Password" id="txt_pass">
+    <!-- Botón para mostrar si la contraseña tiene 6 caracteres -->
+    <button class="password-button" id="password-button">
+        <i class="fa fa-eye"></i> <!-- Agrega un icono de ojo al botón -->
+    </button>
+</div>
                         </div>
                         <div class="form-style-agile">
                             <label style="color:#000000;">Rol</label>

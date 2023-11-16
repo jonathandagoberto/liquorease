@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../recursos/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="main-title">Actualizar Usuario</h2>
+        <div class="crema-container"> <!-- Contenedor con fondo crema -->
+            <!-- Lista de Usuarios -->
+            <div class="container">
+                <h1 class="main-title">Lista de Usuarios</h1>
+                <div class="crema-container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuarios-body">
+                            <!-- Aquí se generará la lista de usuarios con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Formulario de Actualización -->
+            <form action="../../controladores/procesar_actualizacion.php" method="post">
+                <div class="form-group">
+                    <label for="idUsuario">ID de Usuario a Actualizar:</label>
+                    <input type="text" class="form-control" id="idUsuario" name="idUsuario" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion">
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" >
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="rol">Rol:</label>
+                    <select class="form-control" id="rol" name="rol" required>
+                        <option value="administrador">Administrador</option>
+                        <option value="cajero">Cajero</option>
+                        <option value="mesero">Mesero</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario"  required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contrasena">Nueva Contraseña:</label>
+                    <input type="password" class="form-control" id="contrasena" name="contrasena">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Realizar una solicitud Ajax para obtener los datos de los usuarios
+            $.ajax({
+                url: '../../controladores/procesar_actualizacion.php', // Ruta al archivo PHP
+                method: 'GET',
+                success: function(data) {
+                    // Insertar los datos en la tabla
+                    $('#usuarios-body').html(data);
+                },
+                error: function() {
+                    $('#usuarios-body').html('<tr><td colspan="7">No se encontraron usuarios en la base de datos.</td></tr>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

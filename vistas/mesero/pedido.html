@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Toma de Pedidos</title>
+    <title>Realizar Pedido</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../recursos/css/style.css">
 </head>
@@ -11,25 +11,139 @@
         <div class="main-title">
             <h1>Realizar Pedido</h1>
         </div>
+        
+        <!-- Lista de productos -->
+        <div class="admin-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del Producto</th>
+                        <th>Cantidad Disponible</th>
+                        <th>Precio</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="productos-body">
+
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Formulario para agregar productos al pedido -->
         <div class="crema-container">
-            <form action="../../procesar_pedido.php" method="post">
-                <div class="form-group">
-                    <label for="producto_id">ID del Producto:</label>
-                    <input type="text" name="producto_id" required>
-                </div>
-                <div class="form-group">
-                    <label for="nombre_producto">Nombre del Producto:</label>
-                    <input type="text" name="nombre_producto" required>
-                </div>
+            <form id="form-pedido" action="procesar_pedido.php" method="post">
+                <!-- Aquí irán los campos ocultos para almacenar los detalles del producto seleccionado -->
+                <input type="hidden" id="producto_id" name="producto_id">
+                <input type="hidden" id="nombre_producto" name="nombre_producto">
+                <input type="hidden" id="precio_producto" name="precio_producto">
+
                 <div class="form-group">
                     <label for="cantidad">Cantidad:</label>
-                    <input type="number" name="cantidad" required>
+                    <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Cantidad" required>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Registrar Pedido">
+                    <button type="submit" class="btn btn-primary">Agregar al Pedido</button>
                 </div>
             </form>
+            
+            <!-- Resumen del pedido -->
+            <div id="resumen-pedido">
+                <h2>Resumen del Pedido</h2>
+                <ul id="lista-pedido">
+                    <!-- Aquí se mostrarán los productos seleccionados -->
+                </ul>
+                <p id="total-pedido">Total: $0.00</p>
+                <button type="button" class="btn btn-success" id="validar-pedido">Validar Pedido</button>
+            </div>
         </div>
     </div>
+</body>
+</html>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Realizar una solicitud Ajax para obtener los datos de los productos
+            $.ajax({
+                url: '../../controladores/Procesar_pedido.php?' + new Date().getTime(),
+                method: 'POST',
+                success: function(data) {
+                    // Insertar los datos en la tabla
+                    $('#productos-body').html(data);
+                },
+                error: function() {
+                    $('#productos-body').html('<tr><td colspan="6">No se encontraron productos en la base de datos.</td></tr>');
+                }
+            });
+
+            var productosSeleccionados = [];
+
+            // Manejar clics en el botón "Agregar Producto al Pedido"
+            $('#agregar-producto').click(function() {
+                var producto = {
+                    id: $('#producto_id').val(),
+                    nombre: $('#nombre_producto').val(),
+                    cantidad: parseInt($('#cantidad').val()),
+                    precio: parseFloat($('#precio_producto').val()), // Asegúrate de tener un campo para el precio
+                    estado: $('#estado_producto').val()
+                };
+
+                // Validar que la cantidad sea mayor que 0
+                if (producto.cantidad > 0 && !isNaN(producto.precio)) {
+                    productosSeleccionados.push(producto);
+                    actualizarResumenPedido();
+                } else {
+                    alert('La cantidad y el precio deben ser mayores que 0.');
+                }
+            });
+
+            // Manejar clics en el botón "Validar Pedido"
+            $('#validar-pedido').click(function() {
+                // Envía los productos seleccionados al servidor para agregarlos a la tabla de pedidos
+                // Implementa esta parte según tus necesidades específicas
+
+                // Agrega los productos seleccionados como datos del formulario
+                $.ajax({
+                    url: '../../controladores/Procesar_pedido.php?' + new Date().getTime(),
+                    method: 'POST',
+                    data: {
+                        productosSeleccionados: JSON.stringify(productosSeleccionados)
+                    },
+                    success: function(response) {
+                        // Manejar la respuesta del servidor aquí
+                        console.log(response);
+                        // Luego, puedes reiniciar la lista de productos seleccionados
+                        productosSeleccionados = [];
+                        actualizarResumenPedido();
+                    },
+                    error: function(error) {
+                        // Manejar errores aquí
+                        console.error(error);
+                    }
+                });
+            });
+
+            // Función para actualizar la lista de productos seleccionados y el total del pedido
+            function actualizarResumenPedido() {
+                // Limpia la lista y recalcula el total
+                $('#lista-pedido').empty();
+                var totalPedido = 0.0;
+
+                // Recorre los productos seleccionados y actualiza la lista
+                for (var i = 0; i < productosSeleccionados.length; i++) {
+                    var producto = productosSeleccionados[i];
+                    var subtotal = producto.cantidad * producto.precio;
+                    totalPedido += subtotal;
+
+                    // Agrega el producto a la lista
+                    $('#lista-pedido').append('<li>' + producto.nombre + ' - Cantidad: ' + producto.cantidad + ' - Subtotal: $' + subtotal.toFixed(2) + ' - Estado: ' + producto.estado + '</li>');
+                }
+
+                // Actualiza el total del pedido
+                $('#total-pedido').text('Total: $' + totalPedido.toFixed(2));
+            }
+        });
+    </script>
 </body>
 </html>

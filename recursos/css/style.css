@@ -1,6 +1,6 @@
 body {
     background: url('../../recursos/imagenes/liquorease.jpeg') no-repeat center center fixed;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 .container {
     margin-top: 50px;

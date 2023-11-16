@@ -1,8 +1,16 @@
-
- .password-button {
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
-    display: inline-block;
+.password-button {
+    margin-top: 1rem; /* Usa rem en lugar de px para un diseño más adaptable */
+    width: 2rem; /* Aumenta el tamaño del botón para una mejor experiencia de usuario */
+    height: 2rem;
+    display: inline-flex; /* Usa inline-flex para una mejor alineación de los elementos internos */
+    justify-content: center; /* Centra los elementos internos horizontalmente */
+    align-items: center; /* Centra los elementos internos verticalmente */
     border-radius: 50%;
+    background-color: #007BFF; /* Agrega un color de fondo */
+    color: white; /* Cambia el color del texto */
+    transition: background-color 0.3s ease; /* Agrega una transición suave al cambiar el color de fondo */
+}
+
+.password-button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo cuando se pasa el mouse por encima */
 }

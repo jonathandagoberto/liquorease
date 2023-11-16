@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido a Liquorease</title>
+    <!-- Coloca los estilos al final del head para mejorar la carga -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="recursos/css/style.css">
     <link rel="stylesheet" href="recursos/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 </head>
-<body>
-    <div class="container text-center">
-        <div class="d-flex justify-content-center align-items-center">
-            <h1 class="main-title">Bienvenido a Liquorease</h1>
-        </div>
+
+<body class="bg-light"> <!-- Añade una clase de fondo para mejorar la apariencia -->
+    <div class="container text-center mt-5"> <!-- Añade clases de Bootstrap para centrar y espaciar el contenido -->
+        <h1 class="main-title mb-4">Bienvenido a Liquorease</h1>
         <a href="login.php" class="btn btn-primary mb-4"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
 
         <div class="row">
@@ -65,10 +67,7 @@
                 </div>
             </div>
             </div>
-    </div>  
+    </div>
 </body>
+
 </html>
-
-
-
-

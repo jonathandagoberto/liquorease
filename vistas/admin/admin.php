@@ -9,7 +9,7 @@ if (!verificarRol('administrador')) {
 }
 
 // Incluye el archivo de conexión utilizando la ruta relativa
-include( '../../configuracion/conexion.php');
+include('../../configuracion/conexion.php');
 
 // Consulta para obtener la lista de sedes
 $sql = "SELECT id, nombre FROM sedes";
@@ -36,10 +36,9 @@ $conexion->close();
     <style></style>
 </head>
 <body>
-
-<div class="container-button"> 
-    <a href="../../login.php" class="btn btn-danger btn-lg logout-button" id="salir-button">Salir</a>
-</div>
+    <div class="container container-button"> 
+        <a href="../../login.php" class="btn btn-danger btn-lg logout-button" id="salir-button">Salir</a>
+    </div>
     <div class="container">
         <div class="main-title">Bienvenido, Administrador</div>
         <div class="admin-container"> <!-- Contenedor crema -->
@@ -53,11 +52,13 @@ $conexion->close();
                     </div>
                     <div class="col-md-4">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary" >Gestionar Usuario</button>
+                            <button type="button" class="btn btn-primary">Gestionar Usuario</button>
                             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
                             <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="#" onclick="crearUsuario()">Crear Usuario</a>
-                                <a class="dropdown-item" href="#" onclick="editarUsuario()">Editar Usuario</a>
+                                <a class="dropdown-item" href="registro.html" onclick="crearUsuario()">Crear Usuario</a>
+                                <a class="dropdown-item" href="actualizar_usuario.html" onclick="editarUsuario()">Editar Usuario</a>
                             </div>
                         </div>
                     </div>
@@ -102,7 +103,7 @@ $conexion->close();
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -110,5 +111,15 @@ $conexion->close();
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function crearUsuario() {
+            window.location.href = "registro.html";
+        }
+        function crearInformeInventario() {
+            // Cambiar la ubicación de la ventana del navegador
+            window.location.href = 'informe_actual.html';
+        }        
+    </script>
 </body>
 </html>

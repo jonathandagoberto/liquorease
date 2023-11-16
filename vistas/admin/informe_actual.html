@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario Actual</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../recursos/css/style.css">
+    <style></style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">Inventario Actual</h1>
+        <div class="crema-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre del Producto</th>
+                        <th>Cantidad</th>
+                        <th>Ubicación en Sede</th>
+                        <th>Fecha de Vencimiento</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="inventario-body">
+                    <!-- Aquí se generará la lista de productos con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Realizar una solicitud Ajax para obtener los datos del inventario
+            $.ajax({
+                url: '../../controladores/informe_actual.php', // Ruta al archivo PHP
+                method: 'GET',
+                success: function(data) {
+                    // Insertar los datos en la tabla
+                    $('#inventario-body').html(data);
+                },
+                error: function() {
+                    $('#inventario-body').html('<tr><td colspan="8">No se encontraron productos en el inventario.</td></tr>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

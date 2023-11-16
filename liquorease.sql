@@ -129,6 +129,20 @@ INSERT INTO `inventario` (`id`, `nombre_producto`, `cantidad`, `ubicacion_sede`,
 (18, 'Trago 18', 22, 'Sede 3', '2024-01-05', 7.25, 'Descripción del Trago 18', 'disponible'),
 (19, 'Trago 19', 10, 'Sede 1', '2023-12-31', 5.99, 'Descripción del Trago 19', 'disponible'),
 (20, 'Trago 20', 15, 'Sede 2', '2023-11-30', 6.49, 'Descripción del Trago 20', 'disponible');
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedidos`
+--
+
+CREATE TABLE `pedidos` (
+  `id` int(11) NOT NULL,
+  `nombre_producto` varchar(255) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
+  `estado` varchar(20) DEFAULT 'pendiente',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -184,6 +198,13 @@ ALTER TABLE `usuarios`
 ALTER TABLE `inventario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
+--
+-- AUTO_INCREMENT de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --

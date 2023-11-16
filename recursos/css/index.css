@@ -1,18 +1,32 @@
+/* Selecciona todos los elementos con la clase "bebida" */
 .bebida {
     margin-bottom: 30px;
     text-align: center;
 }
+
+/* Estilo de la tarjeta */
 .card {
     border: none; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega sombra para resaltar las tarjetas */
+    transition: box-shadow 0.3s ease; /* Añade transición suave a la sombra */
 }
+
+/* Estilo del título de la tarjeta */
 .card-title {
     font-size: 1.25rem;
     margin: 0;
-    padding: 10px 0;
+    padding: 10px;
     background: #333;
     color: #fff;
 }
+
+/* Estilo de la imagen de la tarjeta */
 .card-img-top {
     object-fit: cover;
     height: 200px; 
+}
+
+/* Pseudo-clase hover para resaltar la tarjeta al pasar el ratón sobre ella */
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }

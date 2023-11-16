@@ -18,41 +18,26 @@ if (!verificarRol('mesero')) {
     <link rel="stylesheet" href="../../recursos/css/style.css">
 </head>
 <body>
-    <a href="../../login.php" class="btn btn-danger btn-lg logout-button">Salir</a>
+<div class="container container-button"> 
+    <a href="../../login.php" class="btn btn-danger btn-lg logout-button" id="salir-button">Salir</a>
+</div>
     <div class="container">
         <div class="main-title">Bienvenido, Mesero</div>
         <div class="admin-container"> <!-- Contenedor crema -->
             <div class="admin-buttons">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <a href="pedido.html">
                             <button class="btn btn-primary">Tomar Pedido</button>
                         </a>
                     </div>
-                    <div class="col-md-4">
-                        <button onclick="validarPedido()" class="btn btn-primary">Validar Pedido</button>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <button onclick="confirmarProducto()" class="btn btn-primary">Confirmar Producto</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function tomarPedidoClientes() {
-            // Agrega aquí la lógica para tomar pedidos de clientes
-        }
-
-        function validarPedido() {
-            // Agrega aquí la lógica para validar un pedido
-        }
-
-        function confirmarProductos() {
-            // Agrega aquí la lógica para confirmar productos en el pedido
-        }
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
