@@ -1,10 +1,10 @@
-const passwordInput = document.getElementById('txt_pass');
-    const passwordButton = document.getElementById('password-button');
+document.querySelector('form').addEventListener('submit', function(event) {
+    var rol = document.getElementById('rol').value;
+    var rolesValidos = ['administrador', 'cajero', 'mesero'];
 
-    passwordInput.addEventListener('input', function() {
-        if (passwordInput.value.length === 6) {
-            passwordButton.style.backgroundColor = 'green';
-        } else {
-            passwordButton.style.backgroundColor = 'red';
-        }
-    });
+    if (!rolesValidos.includes(rol)) {
+        alert('Selecciona un rol válido.');
+        event.preventDefault(); // Evita que el formulario se envíe si el rol no es válido.
+    }
+});
+

@@ -13,6 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['Password'];
     $rol = $_POST['rol'];
 
+    // Validación del rol
+    $roles_validos = ['administrador', 'cajero', 'mesero'];
+    
+    if (!in_array($rol, $roles_validos)) {
+        echo "Rol no válido. Volver a intentar.";
+        exit; // Detener la ejecución si el rol no es válido.
+    }
+
     // Realiza la validación del usuario y contraseña en la base de datos
     $query = "SELECT usuario, contrasena, rol FROM usuarios WHERE usuario = '$username'";
 
@@ -70,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title txt-center">INICIAR SESIÓN</h3>
-                    <form method="post">
+                    <form method="post" id="loginForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <div class="form-style-agile">
                             <label style="color:#000000;">Username</label>
                             <div class="input-group mb-3">
@@ -83,20 +91,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <div class="form-style-agile">
-                        <label style="color:#e84601;">Password</label>
-                        <div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1" style="background-color: white">
-            <span style="color:#e84601" class="fa  fa-unlock-alt"></span>
-        </span>
-    </div>
-    <!-- Cambio el input type a text para mostrar el botón verde o rojo -->
-    <input type="password" class="form-control" placeholder="Digitar su clave de 6 dígitos" aria-label="Password" name="Password" id="txt_pass">
-    <!-- Botón para mostrar si la contraseña tiene 6 caracteres -->
-    <button class="password-button" id="password-button">
-        <i class="fa fa-eye"></i> <!-- Agrega un icono de ojo al botón -->
-    </button>
-</div>
+                            <label style="color:#e84601;">Password</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1" style="background-color: white">
+                                        <span style="color:#e84601" class="fa  fa-unlock-alt"></span>
+                                    </span>
+                                </div>
+                                <input type="password" class="form-control" placeholder="Digitar su clave de 6 dígitos" aria-label="Password" name="Password" id="txt_pass">
+                                <button class="password-button" id="password-button">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="form-style-agile">
                             <label style="color:#000000;">Rol</label>
@@ -114,13 +120,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <button type="submit" style="background: #e84601; border-top-color: rgb(232, 70, 1); border-bottom-color: (232, 70, 1); border-left-color: rgb(232, 70, 1); border-right-color: rgb(232, 70, 1); color: white;" class="btn btn-warning btn-block btn-lg">Entrar</button>
-                    </form>
+                        </form>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- JavaScript para verificar la longitud de la contraseña y cambiar el botón de color -->
-    <script src="recursos/js/login.js"></script>
+
+  <!-- JavaScript para verificar la longitud de la contraseña y cambiar el botón de color -->
+  <script src="recursos/js/login.js"></script>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        var rol = document.getElementById('rol').value;
+        var rolesValidos = ['administrador', 'cajero', 'mesero'];
+
+        if (!rolesValidos.includes(rol)) {
+            alert('Selecciona un rol válido.');
+            event.preventDefault(); // Evita que el formulario se envíe si el rol no es válido.
+        }
+    });
+</script>
 </body>
 </html>

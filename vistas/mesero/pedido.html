@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Realizar Pedido</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../recursos/css/style.css">
 </head>
+
 <body>
     <div class="container">
         <div class="main-title">
             <h1>Realizar Pedido</h1>
         </div>
-        
+
         <!-- Lista de productos -->
         <div class="admin-container">
             <table class="table table-striped">
@@ -20,8 +22,9 @@
                         <th>ID</th>
                         <th>Nombre del Producto</th>
                         <th>Cantidad Disponible</th>
+                        <th>Sede</th>
                         <th>Precio</th>
-                        <th>Acción</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody id="productos-body">
@@ -29,14 +32,56 @@
                 </tbody>
             </table>
         </div>
-        
+
+        <!-- Lista de mesas -->
+        <div class="admin-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID Mesa</th>
+                        <th>Número de Mesa</th>
+                        <th>Estado de la Mesa</th>
+                        <th>Sede</th>
+                    </tr>
+                </thead>
+                <tbody id="mesas-body">
+                    <!-- Aquí se generará la lista de mesas con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Resumen de pedido -->
+        <div class="admin-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="pedido-body">
+                    <!-- Los datos se insertarán aquí -->
+                </tbody>
+            </table>
+        </div>
+
         <!-- Formulario para agregar productos al pedido -->
         <div class="crema-container">
-            <form id="form-pedido" action="procesar_pedido.php" method="post">
-                <!-- Aquí irán los campos ocultos para almacenar los detalles del producto seleccionado -->
-                <input type="hidden" id="producto_id" name="producto_id">
-                <input type="hidden" id="nombre_producto" name="nombre_producto">
-                <input type="hidden" id="precio_producto" name="precio_producto">
+            <form id="form-pedido" action="../../controladores/procesar_pedido.php" method="post">
+                <!-- Resto del formulario -->
+
+                <!-- Nuevos campos para mesa y sede -->
+                <div class="form-group">
+                    <label for="mesa">Mesa:</label>
+                    <input type="text" id="mesa" name="mesa" class="form-control" placeholder="Número de Mesa" required>
+                </div>
+                <div class="form-group">
+                    <label for="sede">Sede:</label>
+                    <input type="text" id="sede" name="sede" class="form-control" placeholder="Nombre de la Sede" required>
+                </div>
 
                 <div class="form-group">
                     <label for="cantidad">Cantidad:</label>
@@ -46,8 +91,7 @@
                     <button type="submit" class="btn btn-primary">Agregar al Pedido</button>
                 </div>
             </form>
-            
-            <!-- Resumen del pedido -->
+
             <div id="resumen-pedido">
                 <h2>Resumen del Pedido</h2>
                 <ul id="lista-pedido">
@@ -58,32 +102,56 @@
             </div>
         </div>
     </div>
-</body>
-</html>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+
+            $.ajax({
+    url: '../../controladores/obtener_pedidos.php?' + new Date().getTime(),
+    method: 'POST',
+    success: function(data) {
+        // Insertar los datos en la tabla
+        $('#mesas-body').html(data);
+    },
+    error: function() {
+        $('#mesas-body').html('<tr><td colspan="5">No se encontraron pedidos en la base de datos.</td></tr>');
+    }
+});
+
             // Realizar una solicitud Ajax para obtener los datos de los productos
             $.ajax({
-                url: '../../controladores/Procesar_pedido.php?' + new Date().getTime(),
+                url: '../../controladores/procesar_pedido.php?' + new Date().getTime(),
                 method: 'POST',
-                success: function(data) {
+                success: function (data) {
                     // Insertar los datos en la tabla
                     $('#productos-body').html(data);
                 },
-                error: function() {
+                error: function () {
                     $('#productos-body').html('<tr><td colspan="6">No se encontraron productos en la base de datos.</td></tr>');
+                }
+            });
+
+            // Realizar una solicitud Ajax para obtener los datos de las mesas
+            $.ajax({
+                url: '../../controladores/lista_mesa_pedido.php',
+                method: 'GET',
+                success: function (data) {
+                    // Insertar los datos en la tabla
+                    $('#mesas-body').html(data);
+                },
+                error: function () {
+                    $('#mesas-body').html('<tr><td colspan="4">No se encontraron mesas en la base de datos.</td></tr>');
                 }
             });
 
             var productosSeleccionados = [];
 
             // Manejar clics en el botón "Agregar Producto al Pedido"
-            $('#agregar-producto').click(function() {
+            $('#agregar-producto').click(function () {
                 var producto = {
                     id: $('#producto_id').val(),
-                    nombre: $('#nombre_producto').val(),
+                    nombre: $('#nombre_producto').val(), // Asegúrate de establecer este valor
                     cantidad: parseInt($('#cantidad').val()),
                     precio: parseFloat($('#precio_producto').val()), // Asegúrate de tener un campo para el precio
                     estado: $('#estado_producto').val()
@@ -99,25 +167,25 @@
             });
 
             // Manejar clics en el botón "Validar Pedido"
-            $('#validar-pedido').click(function() {
+            $('#validar-pedido').click(function () {
                 // Envía los productos seleccionados al servidor para agregarlos a la tabla de pedidos
                 // Implementa esta parte según tus necesidades específicas
 
                 // Agrega los productos seleccionados como datos del formulario
                 $.ajax({
-                    url: '../../controladores/Procesar_pedido.php?' + new Date().getTime(),
+                    url: '../../controladores/procesar_pedido.php?' + new Date().getTime(),
                     method: 'POST',
                     data: {
                         productosSeleccionados: JSON.stringify(productosSeleccionados)
                     },
-                    success: function(response) {
+                    success: function (response) {
                         // Manejar la respuesta del servidor aquí
                         console.log(response);
                         // Luego, puedes reiniciar la lista de productos seleccionados
                         productosSeleccionados = [];
                         actualizarResumenPedido();
                     },
-                    error: function(error) {
+                    error: function (error) {
                         // Manejar errores aquí
                         console.error(error);
                     }
@@ -146,4 +214,5 @@
         });
     </script>
 </body>
+
 </html>

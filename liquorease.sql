@@ -3,13 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2023 a las 06:46:56
+-- Tiempo de generación: 17-11-2023 a las 03:10:44
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,69 +24,16 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sedes`
+-- Estructura de tabla para la tabla `informe_ventas`
 --
 
-CREATE TABLE `sedes` (
+CREATE TABLE `informe_ventas` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-
--- Volcado de datos para la tabla `sedes`
---
-
-INSERT INTO `sedes` (`id`, `nombre`) VALUES
-(1, 'Sede 1'),
-(2, 'Sede 2'),
-(3, 'Sede 3'),
-(4, 'Sede 4');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mesas` con asignación a sedes
---
-
--- Estructura de tabla para la tabla mesas
-CREATE TABLE mesas (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  numero_mesa int(11) NOT NULL,
-  estado varchar(20) DEFAULT 'disponible',
-  descripcion varchar(255) DEFAULT NULL,
-  sede_id int(11) NOT NULL,
-  PRIMARY KEY (id), -- Definir id como clave primaria
-  FOREIGN KEY (sede_id) REFERENCES sedes(id) ON DELETE CASCADE
+  `nombre_producto` varchar(255) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
+  `fecha_venta` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-
--- Para agregar 15 mesas a Sede 1
-INSERT INTO mesas (numero_mesa, estado, descripcion, sede_id) VALUES
-(1, 'disponible', 'Mesa 1 de Sede 1', 1),
-(2, 'disponible', 'Mesa 2 de Sede 1', 1),
-(3, 'disponible', 'Mesa 3 de Sede 1', 1),
--- Agrega más mesas para Sede 1 aquí...
-(15, 'disponible', 'Mesa 15 de Sede 1', 1);
-
--- Para agregar 15 mesas a Sede 2
-INSERT INTO mesas (numero_mesa, estado, descripcion, sede_id) VALUES
-(1, 'disponible', 'Mesa 1 de Sede 2', 2),
-(2, 'disponible', 'Mesa 2 de Sede 2', 2),
-(3, 'disponible', 'Mesa 3 de Sede 2', 2),
--- Agrega más mesas para Sede 2 aquí...
-(15, 'disponible', 'Mesa 15 de Sede 2', 2);
-
--- Para agregar 15 mesas a Sede 3
-INSERT INTO mesas (numero_mesa, estado, descripcion, sede_id) VALUES
-(1, 'disponible', 'Mesa 1 de Sede 3', 3),
-(2, 'disponible', 'Mesa 2 de Sede 3', 3),
-(3, 'disponible', 'Mesa 3 de Sede 3', 3),
--- Agrega más mesas para Sede 3 aquí...
-(15, 'disponible', 'Mesa 15 de Sede 3', 3);
-
-
-
 
 -- --------------------------------------------------------
 
@@ -129,6 +77,39 @@ INSERT INTO `inventario` (`id`, `nombre_producto`, `cantidad`, `ubicacion_sede`,
 (18, 'Trago 18', 22, 'Sede 3', '2024-01-05', 7.25, 'Descripción del Trago 18', 'disponible'),
 (19, 'Trago 19', 10, 'Sede 1', '2023-12-31', 5.99, 'Descripción del Trago 19', 'disponible'),
 (20, 'Trago 20', 15, 'Sede 2', '2023-11-30', 6.49, 'Descripción del Trago 20', 'disponible');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mesas`
+--
+
+CREATE TABLE `mesas` (
+  `id` int(11) NOT NULL,
+  `numero_mesa` int(11) NOT NULL,
+  `estado` varchar(20) DEFAULT 'disponible',
+  `descripcion` varchar(255) DEFAULT NULL,
+  `sede_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mesas`
+--
+
+INSERT INTO `mesas` (`id`, `numero_mesa`, `estado`, `descripcion`, `sede_id`) VALUES
+(1, 1, 'disponible', 'Mesa 1 de Sede 1', 1),
+(2, 2, 'disponible', 'Mesa 2 de Sede 1', 1),
+(3, 3, 'disponible', 'Mesa 3 de Sede 1', 1),
+(4, 15, 'disponible', 'Mesa 15 de Sede 1', 1),
+(5, 1, 'disponible', 'Mesa 1 de Sede 2', 2),
+(6, 2, 'disponible', 'Mesa 2 de Sede 2', 2),
+(7, 3, 'disponible', 'Mesa 3 de Sede 2', 2),
+(8, 15, 'disponible', 'Mesa 15 de Sede 2', 2),
+(9, 1, 'disponible', 'Mesa 1 de Sede 3', 3),
+(10, 2, 'disponible', 'Mesa 2 de Sede 3', 3),
+(11, 3, 'disponible', 'Mesa 3 de Sede 3', 3),
+(12, 15, 'disponible', 'Mesa 15 de Sede 3', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -140,14 +121,34 @@ CREATE TABLE `pedidos` (
   `nombre_producto` varchar(255) NOT NULL,
   `cantidad` int(11) DEFAULT NULL,
   `precio` decimal(10,2) DEFAULT NULL,
-  `estado` varchar(20) DEFAULT 'pendiente',
-  PRIMARY KEY (`id`)
+  `estado` varchar(20) DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios` con registro de sesiones
+-- Estructura de tabla para la tabla `sedes`
+--
+
+CREATE TABLE `sedes` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `sedes`
+--
+
+INSERT INTO `sedes` (`id`, `nombre`) VALUES
+(1, 'Sede 1'),
+(2, 'Sede 2'),
+(3, 'Sede 3'),
+(4, 'Sede 4');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -167,19 +168,44 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `direccion`, `telefono`, `email`, `rol`, `usuario`, `contrasena`) VALUES
-(1, 'Jonathan (Admin)', 'Dirección de Jonathan (Admin)', '123-456-7890', 'admin@liquorease.com', 'administrador', 'admin_jonathan', '123456'),
-(2, 'Jonathan (Cajero)', 'Dirección de Jonathan (Cajero)', '987-654-3210', 'cajero@liquorease.com', 'cajero', 'cajero_jonathan', '123456'),
-(3, 'Jonathan (Mesero)', 'Dirección de Jonathan (Mesero)', '555-123-4567', 'mesero@liquorease.com', 'mesero', 'mesero_jonathan', '123456');
+INSERT INTO `usuarios` (`id`, `nombre`, `direccion`, `telefono`, `email`, `rol`, `usuario`, `contrasena`, `hora_inicio_sesion`, `hora_finalizacion_sesion`) VALUES
+(1, 'Jonathan (Admin)', 'Dirección de Jonathan (Admin)', '123-456-7890', 'admin@liquorease.com', 'administrador', 'admin_jonathan', '$argon2i$v=19$m=65536,t=4,p=1$R0RRbG9PWDJSWlcwazF1aA$yluEtXm9QP5nliKn/LTQqj7nLpmJqw4c+ET9EUDAXAY', '2023-11-17 03:04:56', NULL),
+(2, 'Jonathan (Cajero)', 'Dirección de Jonathan (Cajero)', '987-654-3210', 'cajero@liquorease.com', 'cajero', 'cajero_jonathan', '$argon2i$v=19$m=65536,t=4,p=1$NnRDMnplRUMua2xCbDdkdg$X2PfMNdLiAccLTLco9wfQNeQgHOAv2D+LyM7vLXY5Yw', '2023-11-17 03:09:52', NULL),
+(3, 'Jonathan (Mesero)', 'Dirección de Jonathan (Mesero)', '555-123-4567', 'mesero@liquorease.com', 'mesero', 'mesero_jonathan', '$argon2i$v=19$m=65536,t=4,p=1$V2Y1cHdRby5SVUhSVWhCSQ$nr7UanVCWsaqKGfC3wvK3Ik1p/4Erjeu54gQ71VfOy4', '2023-11-17 03:10:05', NULL);
 
 --
 -- Índices para tablas volcadas
 --
 
 --
+-- Indices de la tabla `informe_ventas`
+--
+ALTER TABLE `informe_ventas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `inventario`
 --
 ALTER TABLE `inventario`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `mesas`
+--
+ALTER TABLE `mesas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sede_id` (`sede_id`);
+
+--
+-- Indices de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `sedes`
+--
+ALTER TABLE `sedes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -193,23 +219,44 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `informe_ventas`
+--
+ALTER TABLE `informe_ventas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT de la tabla `mesas`
+--
+ALTER TABLE `mesas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `mesas`
+--
+ALTER TABLE `mesas`
+  ADD CONSTRAINT `mesas_ibfk_1` FOREIGN KEY (`sede_id`) REFERENCES `sedes` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

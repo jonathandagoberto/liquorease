@@ -112,14 +112,49 @@ $conexion->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script>
-        function crearUsuario() {
-            window.location.href = "registro.html";
-        }
-        function crearInformeInventario() {
-            // Cambiar la ubicación de la ventana del navegador
-            window.location.href = 'informe_actual.html';
-        }        
-    </script>
-</body>
-</html>
+<!-- Agrega este script después de incluir las bibliotecas de jQuery y Bootstrap -->
+<script>
+    document.getElementById('cancelarPedido').addEventListener('click', CancelarPedido);
+    document.getElementById('confirmarPedido').addEventListener('click', ConfirmarPedido);
+
+    function CancelarPedido() {
+        // Realiza una petición AJAX al servidor para cancelar el pedido
+        $.ajax({
+            url: '../../controladores/cancelar_pedido.php', // Ruta del controlador que maneja la cancelación
+            method: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert('Pedido cancelado exitosamente');
+                    // Actualiza la interfaz o redirige según sea necesario
+                } else {
+                    alert('Error al cancelar el pedido');
+                }
+            },
+            error: function() {
+                alert('Error de conexión');
+            }
+        });
+    }
+
+    function ConfirmarPedido() {
+        // Realiza una petición AJAX al servidor para confirmar el pedido
+        $.ajax({
+            url: '../../controladores/confirmar_pedido.php', // Ruta del controlador que maneja la confirmación
+            method: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert('Pedido confirmado exitosamente');
+                    // Actualiza la interfaz o redirige según sea necesario
+                } else {
+                    alert('Error al confirmar el pedido');
+                }
+            },
+            error: function() {
+                alert('Error de conexión');
+            }
+        });
+    }
+</script>
+

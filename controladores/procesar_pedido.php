@@ -3,89 +3,74 @@
 include(__DIR__ . '/../configuracion/conexion.php');
 
 // Verifica si la conexión se realizó con éxito
-if ($conexion) {
-    // Consulta para obtener la lista de productos del inventario
-    $sql = "SELECT id, nombre_producto, cantidad, ubicacion_sede, precio, estado FROM inventario";
-    
-    // Usa consultas preparadas para evitar inyecciones SQL
-    $stmt = $conexion->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $htmlOutput = ""; // Variable para almacenar el HTML resultante
-
-        while ($row = $result->fetch_assoc()) {
-            $htmlOutput .= "<tr>";
-            $htmlOutput .= "<td>" . htmlspecialchars($row["id"]) . "</td>";
-            $htmlOutput .= "<td>" . htmlspecialchars($row["nombre_producto"]) . "</td>";
-            $htmlOutput .= "<td>" . htmlspecialchars($row["cantidad"]) . "</td>";
-            $htmlOutput .= "<td>" . htmlspecialchars($row["ubicacion_sede"]) . "</td>";
-            $htmlOutput .= "<td>" . htmlspecialchars($row["precio"]) . "</td>";
-            $htmlOutput .= "<td>" . htmlspecialchars($row["estado"]) . "</td>";
-            $htmlOutput .= "</tr>";
-        }
-
-        echo $htmlOutput;
-    } else {
-        echo "No se encontraron productos en el inventario.";
-    }
-
-    // Cierra la conexión a la base de datos
-    $conexion->close();
-} else {
-    echo "Error en la conexión a la base de datos.";
+if ($conexion->connect_error) {
+    die("Error en la conexión a la base de datos: " . $conexion->connect_error);
 }
-?>
 
+// Consulta para obtener la lista de productos disponibles en el inventario
+$sql = "SELECT id, nombre_producto, cantidad, ubicacion_sede, precio, estado FROM inventario WHERE estado = 'disponible'";
 
-// Manejar la solicitud de pedido
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener datos del formulario
-    $productosSeleccionados = json_decode($_POST['productosSeleccionados'], true);
+// Usa consultas preparadas para evitar inyecciones SQL
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    // Validar que se hayan seleccionado productos
-    if (!empty($productosSeleccionados)) {
-        // Iniciar transacción
-        $conexion->begin_transaction();
+if ($result->num_rows > 0) {
+    $htmlOutput = ""; // Variable para almacenar el HTML resultante
 
-        try {
-            // Recorrer los productos seleccionados
-            foreach ($productosSeleccionados as $producto) {
-                // Actualizar el inventario restando la cantidad seleccionada
-                $updateQuery = "UPDATE inventario SET cantidad = cantidad - ? WHERE id = ?";
-                $updateStmt = $conexion->prepare($updateQuery);
-                $updateStmt->bind_param('ii', $producto['cantidad'], $producto['id']);
-                $updateStmt->execute();
+    while ($row = $result->fetch_assoc()) {
+        $htmlOutput .= "<tr>";
+        $htmlOutput .= "<td>" . htmlspecialchars($row["id"]) . "</td>";
+        $htmlOutput .= "<td>" . htmlspecialchars($row["nombre_producto"]) . "</td>";
+        $htmlOutput .= "<td>" . htmlspecialchars($row["cantidad"]) . "</td>";
+        $htmlOutput .= "<td>" . htmlspecialchars($row["ubicacion_sede"]) . "</td>";
+        $htmlOutput .= "<td>" . htmlspecialchars($row["precio"]) . "</td>";
+        $htmlOutput .= "<td>" . htmlspecialchars($row["estado"]) . "</td>";
+        $htmlOutput .= "</tr>";
+    }
 
-                // Insertar el producto en la tabla de pedidos
-                $insertQuery = "INSERT INTO pedidos (id_producto, nombre_producto, cantidad, precio, estado) VALUES (?, ?, ?, ?, ?)";
-                $insertStmt = $conexion->prepare($insertQuery);
-                $insertStmt->bind_param('issds', $producto['id'], $producto['nombre'], $producto['cantidad'], $producto['precio'], $producto['estado']);
-                $insertStmt->execute();
-            }
+    echo $htmlOutput;
 
-            // Confirmar transacción
-            $conexion->commit();
+    // Verifica si se ha enviado el formulario
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Obtén los datos del formulario
+        $producto_id = $_POST["producto_id_mostrar"];
+        $nombre_producto = $_POST["nombre_producto"];
+        $precio_producto = $_POST["precio_producto"];
+        $mesa = $_POST["mesa"];
+        $sede = $_POST["sede"];
+        $cantidad = $_POST["cantidad"];
 
-            // Envía una respuesta exitosa
-            echo json_encode(['success' => true]);
-        } catch (Exception $e) {
-            // Revertir transacción en caso de error
-            $conexion->rollback();
+        // 1. Inserta el pedido en la tabla pedidos
+        $consulta_pedido = "INSERT INTO pedidos (nombre_producto, cantidad, precio) VALUES (?, ?, ?)";
+        $stmt_pedido = $conexion->prepare($consulta_pedido);
+        $stmt_pedido->bind_param("sid", $nombre_producto, $cantidad, $precio_producto);
+        $stmt_pedido->execute();
 
-            // Envía una respuesta de error
-            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        // 2. Actualiza la cantidad en la tabla inventario
+        $consulta_actualizar_inventario = "UPDATE inventario SET cantidad = cantidad - ? WHERE id = ?";
+        $stmt_actualizar_inventario = $conexion->prepare($consulta_actualizar_inventario);
+        $stmt_actualizar_inventario->bind_param("ii", $cantidad, $producto_id);
+        $stmt_actualizar_inventario->execute();
+
+        // Verifica el resultado de ambas consultas
+        if ($stmt_pedido->affected_rows > 0 && $stmt_actualizar_inventario->affected_rows > 0) {
+            echo "Pedido realizado con éxito. Inventario actualizado.";
+        } else {
+            echo "Error al realizar el pedido o actualizar el inventario.";
         }
-    } else {
-        // No se seleccionaron productos
-        echo json_encode(['success' => false, 'error' => 'No se seleccionaron productos para el pedido.']);
+
+        // Cierra las declaraciones preparadas
+        $stmt_pedido->close();
+        $stmt_actualizar_inventario->close();
     }
 } else {
-    // Método no permitido
-    echo json_encode(['success' => false, 'error' => 'Método no permitido.']);
+    echo "No se encontraron productos disponibles en el inventario.";
 }
 
 // Cierra la conexión a la base de datos
+$stmt->close();
 $conexion->close();
 ?>
+
+
