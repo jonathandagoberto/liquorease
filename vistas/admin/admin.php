@@ -77,18 +77,18 @@ $conexion->close();
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary">Gestionar Sedes</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                                <a class="dropdown-item" href="modificar_sede.html" onclick="modificarNombreSede()">Modificar Nombre de Sede</a>
-                                <?php foreach ($sedes as $sede) { ?>
-                                    <a class="dropdown-item" href="#" onclick="verSede(<?php echo $sede['id']; ?>)"><?php echo $sede['nombre']; ?></a>
-                                <?php } ?>
-                            </div>
-                        </div>
+                    <div class="btn-group">
+    <button type="button" class="btn btn-primary">Gestionar Sedes</button>
+    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
+        <a class="dropdown-item" href="modificar_sede.html" onclick="modificarNombreSede()">Modificar Nombre de Sede</a>
+        <?php foreach ($sedes as $sede) { ?>
+            <a class="dropdown-item" href="#" onclick="verSede(<?php echo $sede['id']; ?>)"><?php echo $sede['nombre']; ?></a>
+        <?php } ?>
+    </div>
+</div>
                     </div>
                     <div class="col-md-4">
                         <div class="btn-group">
@@ -112,49 +112,16 @@ $conexion->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<!-- Agrega este script después de incluir las bibliotecas de jQuery y Bootstrap -->
-<script>
-    document.getElementById('cancelarPedido').addEventListener('click', CancelarPedido);
-    document.getElementById('confirmarPedido').addEventListener('click', ConfirmarPedido);
-
-    function CancelarPedido() {
-        // Realiza una petición AJAX al servidor para cancelar el pedido
-        $.ajax({
-            url: '../../controladores/cancelar_pedido.php', // Ruta del controlador que maneja la cancelación
-            method: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    alert('Pedido cancelado exitosamente');
-                    // Actualiza la interfaz o redirige según sea necesario
-                } else {
-                    alert('Error al cancelar el pedido');
-                }
-            },
-            error: function() {
-                alert('Error de conexión');
-            }
-        });
-    }
-
-    function ConfirmarPedido() {
-        // Realiza una petición AJAX al servidor para confirmar el pedido
-        $.ajax({
-            url: '../../controladores/confirmar_pedido.php', // Ruta del controlador que maneja la confirmación
-            method: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    alert('Pedido confirmado exitosamente');
-                    // Actualiza la interfaz o redirige según sea necesario
-                } else {
-                    alert('Error al confirmar el pedido');
-                }
-            },
-            error: function() {
-                alert('Error de conexión');
-            }
-        });
+    <script>
+        function verSede(idSede) {
+        // Construir la URL dinámicamente usando el ID de la sede
+        var url = 'sede' + idSede + '.html';
+        window.location.href = url;
+    }    
+    function crearInformeInventario() {
+        window.location.href = 'informe_actual.html';
     }
 </script>
+</body>
+</html>
 

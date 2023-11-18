@@ -8,7 +8,7 @@ if ($conexion->connect_error) {
 }
 
 // Consulta para obtener la lista de productos disponibles en el inventario
-$sql = "SELECT id, nombre_producto, cantidad, ubicacion_sede, precio, estado FROM inventario WHERE estado = 'disponible'";
+$sql = "SELECT id, nombre_producto, cantidad, sede_id, precio, estado FROM inventario WHERE estado = 'disponible'";
 
 // Usa consultas preparadas para evitar inyecciones SQL
 $stmt = $conexion->prepare($sql);
@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
         $htmlOutput .= "<td>" . htmlspecialchars($row["id"]) . "</td>";
         $htmlOutput .= "<td>" . htmlspecialchars($row["nombre_producto"]) . "</td>";
         $htmlOutput .= "<td>" . htmlspecialchars($row["cantidad"]) . "</td>";
-        $htmlOutput .= "<td>" . htmlspecialchars($row["ubicacion_sede"]) . "</td>";
+        $htmlOutput .= "<td>" . htmlspecialchars($row["sede_id"]) . "</td>"; // Cambiado de ubicacion_sede a sede_id
         $htmlOutput .= "<td>" . htmlspecialchars($row["precio"]) . "</td>";
         $htmlOutput .= "<td>" . htmlspecialchars($row["estado"]) . "</td>";
         $htmlOutput .= "</tr>";
@@ -72,5 +72,3 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conexion->close();
 ?>
-
-

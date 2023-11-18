@@ -41,11 +41,14 @@ CREATE TABLE `informe_ventas` (
 -- Estructura de tabla para la tabla `inventario`
 --
 
+-- Estructura de tabla actualizada para la tabla `inventario`
+--
+
 CREATE TABLE `inventario` (
   `id` int(11) NOT NULL,
   `nombre_producto` varchar(255) NOT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `ubicacion_sede` varchar(255) DEFAULT NULL,
+  `sede_id` int(11) DEFAULT NULL,
   `fecha_vencimiento` date DEFAULT NULL,
   `precio` decimal(10,2) DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
@@ -53,32 +56,31 @@ CREATE TABLE `inventario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `inventario`
+-- Volcado de datos actualizado para la tabla `inventario`
 --
 
-INSERT INTO `inventario` (`id`, `nombre_producto`, `cantidad`, `ubicacion_sede`, `fecha_vencimiento`, `precio`, `descripcion`, `estado`) VALUES
-(1, 'Trago 1', 10, 'Sede 1', '2023-12-31', 5.99, 'Descripción del Trago 1', 'disponible'),
-(2, 'Trago 2', 15, 'Sede 2', '2023-11-30', 6.49, 'Descripción del Trago 2', 'disponible'),
-(3, 'Trago 3', 20, 'Sede 3', '2024-01-15', 7.99, 'Descripción del Trago 3', 'disponible'),
-(4, 'Trago 4', 12, 'Sede 1', '2023-12-20', 5.25, 'Descripción del Trago 4', 'disponible'),
-(5, 'Trago 5', 18, 'Sede 2', '2023-11-30', 6.99, 'Descripción del Trago 5', 'disponible'),
-(6, 'Trago 6', 25, 'Sede 3', '2024-01-10', 8.50, 'Descripción del Trago 6', 'disponible'),
-(7, 'Trago 7', 8, 'Sede 1', '2023-12-25', 4.75, 'Descripción del Trago 7', 'disponible'),
-(8, 'Trago 8', 14, 'Sede 2', '2023-11-30', 6.75, 'Descripción del Trago 8', 'disponible'),
-(9, 'Trago 9', 22, 'Sede 3', '2024-01-05', 7.25, 'Descripción del Trago 9', 'disponible'),
-(10, 'Trago 10', 10, 'Sede 1', '2023-12-31', 5.99, 'Descripción del Trago 10', 'disponible'),
-(11, 'Trago 11', 15, 'Sede 2', '2023-11-30', 6.49, 'Descripción del Trago 11', 'disponible'),
-(12, 'Trago 12', 20, 'Sede 3', '2024-01-15', 7.99, 'Descripción del Trago 12', 'disponible'),
-(13, 'Trago 13', 12, 'Sede 1', '2023-12-20', 5.25, 'Descripción del Trago 13', 'disponible'),
-(14, 'Trago 14', 18, 'Sede 2', '2023-11-30', 6.99, 'Descripción del Trago 14', 'disponible'),
-(15, 'Trago 15', 25, 'Sede 3', '2024-01-10', 8.50, 'Descripción del Trago 15', 'disponible'),
-(16, 'Trago 16', 8, 'Sede 1', '2023-12-25', 4.75, 'Descripción del Trago 16', 'disponible'),
-(17, 'Trago 17', 14, 'Sede 2', '2023-11-30', 6.75, 'Descripción del Trago 17', 'disponible'),
-(18, 'Trago 18', 22, 'Sede 3', '2024-01-05', 7.25, 'Descripción del Trago 18', 'disponible'),
-(19, 'Trago 19', 10, 'Sede 1', '2023-12-31', 5.99, 'Descripción del Trago 19', 'disponible'),
-(20, 'Trago 20', 15, 'Sede 2', '2023-11-30', 6.49, 'Descripción del Trago 20', 'disponible');
+INSERT INTO `inventario` (`id`, `nombre_producto`, `cantidad`, `sede_id`, `fecha_vencimiento`, `precio`, `descripcion`, `estado`) VALUES
+(1, 'Trago 1', 10, 1, '2023-12-31', 5.99, 'Descripción del Trago 1', 'disponible'),
+(2, 'Trago 2', 15, 2, '2023-11-30', 6.49, 'Descripción del Trago 2', 'disponible'),
+(3, 'Trago 3', 20, 3, '2024-01-15', 7.99, 'Descripción del Trago 3', 'disponible'),
+(4, 'Trago 4', 12, 1, '2023-12-20', 5.25, 'Descripción del Trago 4', 'disponible'),
+(5, 'Trago 5', 18, 2, '2023-11-30', 6.99, 'Descripción del Trago 5', 'disponible'),
+(6, 'Trago 6', 25, 3, '2024-01-10', 8.50, 'Descripción del Trago 6', 'disponible'),
+(7, 'Trago 7', 8, 1, '2023-12-25', 4.75, 'Descripción del Trago 7', 'disponible'),
+(8, 'Trago 8', 14, 2, '2023-11-30', 6.75, 'Descripción del Trago 8', 'disponible'),
+(9, 'Trago 9', 22, 3, '2024-01-05', 7.25, 'Descripción del Trago 9', 'disponible'),
+(10, 'Trago 10', 10, 1, '2023-12-31', 5.99, 'Descripción del Trago 10', 'disponible'),
+(11, 'Trago 11', 15, 2, '2023-11-30', 6.49, 'Descripción del Trago 11', 'disponible'),
+(12, 'Trago 12', 20, 3, '2024-01-15', 7.99, 'Descripción del Trago 12', 'disponible'),
+(13, 'Trago 13', 12, 1, '2023-12-20', 5.25, 'Descripción del Trago 13', 'disponible'),
+(14, 'Trago 14', 18, 2, '2023-11-30', 6.99, 'Descripción del Trago 14', 'disponible'),
+(15, 'Trago 15', 25, 3, '2024-01-10', 8.50, 'Descripción del Trago 15', 'disponible'),
+(16, 'Trago 16', 8, 1, '2023-12-25', 4.75, 'Descripción del Trago 16', 'disponible'),
+(17, 'Trago 17', 14, 2, '2023-11-30', 6.75, 'Descripción del Trago 17', 'disponible'),
+(18, 'Trago 18', 22, 3, '2024-01-05', 7.25, 'Descripción del Trago 18', 'disponible'),
+(19, 'Trago 19', 10, 1, '2023-12-31', 5.99, 'Descripción del Trago 19', 'disponible'),
+(20, 'Trago 20', 15, 2, '2023-11-30', 6.49, 'Descripción del Trago 20', 'disponible');
 
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `mesas`

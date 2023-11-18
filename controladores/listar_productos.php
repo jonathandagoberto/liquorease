@@ -9,14 +9,14 @@ $result = $conexion->query($sql);
 if ($result->num_rows > 0) {
     // Imprime la lista de productos en formato de tabla HTML
     echo '<table class="table table-striped">';
-    echo '<thead><tr><th>ID</th><th>Nombre</th><th>Cantidad</th><th>Ubicación Sede</th><th>Fecha Vencimiento</th><th>Precio</th><th>Descripción</th><th>Estado</th></tr></thead>';
+    echo '<thead><tr><th>ID</th><th>Nombre</th><th>Cantidad</th><th>Sede ID</th><th>Fecha Vencimiento</th><th>Precio</th><th>Descripción</th><th>Estado</th></tr></thead>';
     echo '<tbody>';
     while ($row = $result->fetch_assoc()) {
         echo '<tr>';
         echo '<td>' . $row["id"] . '</td>';
         echo '<td>' . $row["nombre_producto"] . '</td>';
         echo '<td>' . $row["cantidad"] . '</td>';
-        echo '<td>' . $row["ubicacion_sede"] . '</td>';
+        echo '<td>' . $row["sede_id"] . '</td>'; // Cambiado de ubicacion_sede a sede_id
         echo '<td>' . $row["fecha_vencimiento"] . '</td>';
         echo '<td>' . $row["precio"] . '</td>';
         echo '<td>' . $row["descripcion"] . '</td>';

@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtén los demás datos del formulario
     $nombre_producto = $_POST["nombre_producto"];
     $cantidad = $_POST["cantidad"];
-    $ubicacion_sede = $_POST["ubicacion_sede"];
+    $sede_id = $_POST["ubicacion_sede"]; // Cambiado de ubicacion_sede a sede_id
     $fecha_vencimiento = $_POST["fecha_vencimiento"];
     $precio = $_POST["precio"];
     $descripcion = $_POST["descripcion"];
@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "La cantidad no puede ser mayor que 50.";
     } else {
         // Evita posibles ataques de inyección SQL utilizando sentencias preparadas
-        $stmt = $conexion->prepare("UPDATE inventario SET nombre_producto = ?, cantidad = ?, ubicacion_sede = ?, fecha_vencimiento = ?, precio = ?, descripcion = ?, estado = ? WHERE id = ?");
-        $stmt->bind_param("sssssssi", $nombre_producto, $cantidad, $ubicacion_sede, $fecha_vencimiento, $precio, $descripcion, $estado, $id);
+        $stmt = $conexion->prepare("UPDATE inventario SET nombre_producto = ?, cantidad = ?, sede_id = ?, fecha_vencimiento = ?, precio = ?, descripcion = ?, estado = ? WHERE id = ?");
+        $stmt->bind_param("sssssssi", $nombre_producto, $cantidad, $sede_id, $fecha_vencimiento, $precio, $descripcion, $estado, $id); // Cambiado de ubicacion_sede a sede_id
 
         if ($stmt->execute()) {
             // Actualización exitosa, redirige de nuevo a la página de edición o a donde desees
@@ -38,4 +38,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
