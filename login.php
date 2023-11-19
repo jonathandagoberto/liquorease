@@ -11,15 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = $_POST['Username'];
     $password = $_POST['Password'];
-    $rol = $_POST['rol'];
-
-    // Validación del rol
-    $roles_validos = ['administrador', 'cajero', 'mesero'];
-    
-    if (!in_array($rol, $roles_validos)) {
-        echo "Rol no válido. Volver a intentar.";
-        exit; // Detener la ejecución si el rol no es válido.
-    }
 
     // Realiza la validación del usuario y contraseña en la base de datos
     $query = "SELECT usuario, contrasena, rol FROM usuarios WHERE usuario = '$username'";
@@ -102,21 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <button class="password-button" id="password-button">
                                     <i class="fa fa-eye"></i>
                                 </button>
-                            </div>
-                        </div>
-                        <div class="form-style-agile">
-                            <label style="color:#000000;">Rol</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1" style="background-color: white">
-                                        <span style="color:#e84601" class="fas fa-users"></span>
-                                    </span>
-                                </div>
-                                <select class="form-control" id="rol" name="rol">
-                                    <option value="administrador">Administrador</option>
-                                    <option value="cajero">Cajero</option>
-                                    <option value="mesero">Mesero</option>
-                                </select>
                             </div>
                         </div>
                         <button type="submit" style="background: #e84601; border-top-color: rgb(232, 70, 1); border-bottom-color: (232, 70, 1); border-left-color: rgb(232, 70, 1); border-right-color: rgb(232, 70, 1); color: white;" class="btn btn-warning btn-block btn-lg">Entrar</button>

@@ -37,7 +37,7 @@
             <form action="../../controladores/procesar_actualizacion.php" method="post">
                 <div class="form-group">
                     <label for="idUsuario">ID de Usuario a Actualizar:</label>
-                    <input type="text" class="form-control" id="idUsuario" name="idUsuario" required>
+                    <input type="text" class="form-control" id="idUsuario" name="idUsuario" pattern="\d+" title="Ingrese solo números" required>
                 </div>
                 
                 <div class="form-group">
@@ -52,7 +52,7 @@
                 
                 <div class="form-group">
                     <label for="telefono">Teléfono:</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" >
+                    <input type="text" class="form-control" id="telefono" name="telefono" pattern="\d+" title="Ingrese solo números">
                 </div>
                 
                 <div class="form-group">
@@ -99,8 +99,17 @@
                     $('#usuarios-body').html('<tr><td colspan="7">No se encontraron usuarios en la base de datos.</td></tr>');
                 }
             });
+    
+            // Validación para permitir solo números en los campos idUsuario y telefono
+            $('#idUsuario, #telefono').on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+    
+            // Detectar el evento de retroceso
+            window.addEventListener('popstate', function(event) {
+                // Redirigir a admin.php cuando se detecta un retroceso
+                window.location.href = 'admin.php';
+            });
         });
     </script>
-</body>
-</html>
-
+    

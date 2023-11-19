@@ -14,8 +14,8 @@
             <form action="../../controladores/editar_producto2.php" method="post">
                 <div class="form-group">
                     <label for="id">ID del Producto a Editar:</label>
-                    <input type="text" id="id" name="id" class="form-control" required>
-                </div>
+                    <input type="text" id="id" name="id" class="form-control" pattern="\d+" title="Ingrese solo números" required>
+                </div>                
                 <div class="form-group">
                     <label for="nombre_producto">Nombre del Producto:</label>
                     <input type="text" id="nombre_producto" name="nombre_producto" class="form-control" required>
@@ -25,16 +25,21 @@
                     <input type="number" id="cantidad" name="cantidad" class="form-control" required min="0" max="50">
                 </div>
                 <div class="form-group">
-                    <label for="ubicacion_sede">ID Sede:</label>
-                    <input type="text" id="ubicacion_sede" name="ubicacion_sede" class="form-control" required>
+                    <label for="ubicacion_sede"> Sede ID:</label>
+                    <select id="ubicacion_sede" name="ubicacion_sede" class="form-control" required>
+                        <option value="1">Sede ID: 1</option>
+                        <option value="2">Sede ID: 2</option>
+                        <option value="3">Sede ID: 3</option>
+                        <option value="4">Sede ID: 4</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
-                    <input type="text" id="fecha_vencimiento" name="fecha_vencimiento" class="form-control" required>
+                    <input type="date" id="fecha_vencimiento" name="fecha_vencimiento" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="precio">Precio:</label>
-                    <input type="text" id="precio" name="precio" class="form-control" required>
+                    <input type="number" id="precio" name="precio" class="form-control" step="0.01" required>
                 </div>
                 <div class="form-group">
                     <label for="descripcion">Descripción:</label>
@@ -47,12 +52,29 @@
                         <option value="agotado">Agotado</option>
                         <option value="en_espera">En Espera</option>
                     </select>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Editar Producto</button>
-                </form>
-            </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Editar Producto</button>
+                </div>
+            </form>
         </div>
-    </body>
-    </html>
+    </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Restricción de solo números en los campos id, cantidad y precio
+            $('#id, #cantidad, #precio').on('input', function() {
+                this.value = this.value.replace(/[^0-9.]/g, '');
+            });
+
+// Detectar el evento de retroceso
+window.addEventListener('popstate', function(event) {
+    // Redirigir a admin.php cuando se detecta un retroceso
+    window.location.replace('cajero.php');
+});
+
+        });
+    </script>
+</body>
+</html>

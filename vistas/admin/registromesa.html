@@ -13,7 +13,7 @@
             <form action="../../controladores/registro_mesa.php" method="post">
                 <div class="form-group">
                     <label for="numero_mesa">Número de Mesa:</label>
-                    <input type="text" id="numero_mesa" name="numero_mesa" class="form-control" required>
+                    <input type="text" id="numero_mesa" name="numero_mesa" class="form-control" pattern="\d+" title="Ingrese solo números" required>
                 </div>
                 <div class="form-group">
                     <label for="estado">Estado:</label>
@@ -40,5 +40,15 @@
             </form>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Restricción de solo números en el campo numero_mesa
+            $('#numero_mesa').on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        });
+    </script>
 </body>
 </html>

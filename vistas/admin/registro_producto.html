@@ -17,19 +17,24 @@
                 </div>
                 <div class="form-group">
                     <label for="cantidad">Cantidad:</label>
-                    <input type="number" id="cantidad" name="cantidad" class="form-control" required min="0" max="50">
+                    <input type="text" id="cantidad" name="cantidad" class="form-control" pattern="\d+" title="Ingrese solo números" required>
                 </div>
                 <div class="form-group">
-                    <label for="ubicacion_sede">ID Sede:</label>
-                    <input type="text" id="ubicacion_sede" name="ubicacion_sede" class="form-control" required>
+                    <label for="ubicacion_sede"> Sede ID:</label>
+                    <select id="ubicacion_sede" name="ubicacion_sede" class="form-control" required>
+                        <option value="1">Sede ID: 1</option>
+                        <option value="2">Sede ID: 2</option>
+                        <option value="3">Sede ID: 3</option>
+                        <option value="4">Sede ID: 4</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
-                    <input type="text" id="fecha_vencimiento" name="fecha_vencimiento" class="form-control" required>
+                    <input type="date" id="fecha_vencimiento" name="fecha_vencimiento" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="precio">Precio:</label>
-                    <input type="text" id="precio" name="precio" class="form-control" required>
+                    <input type="text" id="precio" name="precio" class="form-control" pattern="\d+(\.\d{2})?" title="Ingrese un número (puede incluir hasta dos decimales)" required>
                 </div>
                 <div class="form-group">
                     <label for="descripcion">Descripción:</label>
@@ -47,5 +52,34 @@
             </form>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Restricción de solo números en los campos cantidad y precio
+            $('#cantidad, #precio').on('input', function() {
+                this.value = this.value.replace(/[^0-9.]/g, '');
+            });
+    
+            // Validación de cantidad para un máximo de 50
+            $('#cantidad').on('blur', function() {
+                var cantidad = parseInt($(this).val());
+                if (isNaN(cantidad) || cantidad < 0) {
+                    alert('La cantidad debe ser un número positivo.');
+                    $(this).val(''); // Limpiar el campo si no es válido
+                } else if (cantidad > 50) {
+                    alert('La cantidad no puede ser mayor a 50.');
+                    $(this).val('50'); // Establecer el valor máximo permitido
+                }
+            });
+    
+            // Detectar el evento de retroceso
+            window.addEventListener('popstate', function(event) {
+                // Redirigir a admin.php cuando se detecta un retroceso
+                window.location.replace('admin.php');
+            });
+        });
+    </script>
+    
 </body>
 </html>

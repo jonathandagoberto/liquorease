@@ -1,10 +1,20 @@
-document.querySelector('form').addEventListener('submit', function(event) {
-    var rol = document.getElementById('rol').value;
-    var rolesValidos = ['administrador', 'cajero', 'mesero'];
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var password = document.getElementById('txt_pass').value;
 
-    if (!rolesValidos.includes(rol)) {
-        alert('Selecciona un rol válido.');
-        event.preventDefault(); // Evita que el formulario se envíe si el rol no es válido.
-    }
-});
+            if (password.length < 6) {
+                alert('La contraseña debe tener al menos 6 caracteres.');
+                event.preventDefault();
+            } else {
+                var btn = document.querySelector('button[type="submit"]');
+                btn.style.backgroundColor = '#28a745'; // Cambia el color del botón a verde
+                btn.style.borderColor = '#28a745';
+                btn.style.color = 'white';
+            }
+        })
+    });
+</script>
+
+
 
