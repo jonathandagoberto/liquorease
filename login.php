@@ -4,6 +4,7 @@ include('controladores/verificar_rol.php');
 
 if (isset($_SESSION['usuario'])) {
     header('Location: vistas/admin/admin.php');
+    exit(); // Agregado para evitar que el código se siga ejecutando después de redirigir
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,35 +13,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['Username'];
     $password = $_POST['Password'];
 
-    // Realiza la validación del usuario y contraseña en la base de datos
-    $query = "SELECT usuario, contrasena, rol FROM usuarios WHERE usuario = '$username'";
-
-    $result = mysqli_query($conexion, $query);
+    // Utiliza consultas preparadas para evitar inyección SQL
+    $query = "SELECT usuario, contrasena, rol FROM usuarios WHERE usuario = ?";
+    $stmt = mysqli_prepare($conexion, $query);
+    mysqli_stmt_bind_param($stmt, 's', $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
     if ($result) {
         $row = mysqli_fetch_assoc($result);
 
-        // Después de validar el usuario
         if ($row) {
-            // Verifica la contraseña utilizando password_verify
             if (password_verify($password, $row['contrasena'])) {
-                // Contraseña válida
-
-                // Registra la hora de inicio de sesión para el usuario actual
                 $horaInicioSesion = date('Y-m-d H:i:s');
-                $query = "UPDATE usuarios SET hora_inicio_sesion = '$horaInicioSesion' WHERE usuario = '$username'";
-                mysqli_query($conexion, $query);
+                $query = "UPDATE usuarios SET hora_inicio_sesion = ? WHERE usuario = ?";
+                $stmt = mysqli_prepare($conexion, $query);
+                mysqli_stmt_bind_param($stmt, 'ss', $horaInicioSesion, $username);
+                mysqli_stmt_execute($stmt);
 
-                // Establece el rol en la sesión
                 $_SESSION['rol'] = $row['rol'];
 
-                // Redirige a la página correspondiente según el rol
-                if ($row['rol'] === 'administrador') {
-                    header('Location: vistas/admin/admin.php');
-                } elseif ($row['rol'] === 'cajero') {
-                    header('Location: vistas/cajero/cajero.php');
-                } elseif ($row['rol'] === 'mesero') {
-                    header('Location: vistas/mesero/mesero.php');
+                switch ($row['rol']) {
+                    case 'administrador':
+                        header('Location: vistas/admin/admin.php');
+                        exit();
+                    case 'cajero':
+                        header('Location: vistas/cajero/cajero.php');
+                        exit();
+                    case 'mesero':
+                        header('Location: vistas/mesero/mesero.php');
+                        exit();
+                    default:
+                        echo "Rol no válido. Volver a intentar.";
+                        break;
                 }
             } else {
                 echo "Contraseña incorrecta. Volver a intentar.";
@@ -71,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h3 class="card-title txt-center">INICIAR SESIÓN</h3>
                     <form method="post" id="loginForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <div class="form-style-agile">
-                            <label style="color:#000000;">Username</label>
+                            <label style="color:#000000;">Usuario</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1" style="background-color: white">
@@ -82,37 +87,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <div class="form-style-agile">
-                            <label style="color:#e84601;">Password</label>
+                            <label style="color:#e84601;">Contraseña:</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1" style="background-color: white">
                                         <span style="color:#e84601" class="fa  fa-unlock-alt"></span>
                                     </span>
                                 </div>
-                                <input type="password" class="form-control" placeholder="Digitar su clave de 6 dígitos" aria-label="Password" name="Password" id="txt_pass">
-                                <button class="password-button" id="password-button">
-                                    <i class="fa fa-eye"></i>
-                                </button>
+                                <input type="password" class="form-control" placeholder="Digitar su clave" aria-label="Password" name="Password" id="txt_pass">
                             </div>
                         </div>
                         <button type="submit" style="background: #e84601; border-top-color: rgb(232, 70, 1); border-bottom-color: (232, 70, 1); border-left-color: rgb(232, 70, 1); border-right-color: rgb(232, 70, 1); color: white;" class="btn btn-warning btn-block btn-lg">Entrar</button>
-                        </form>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</body>
+</html>
 
-  <!-- JavaScript para verificar la longitud de la contraseña y cambiar el botón de color -->
-  <script src="recursos/js/login.js"></script>
-<script>
-    document.querySelector('form').addEventListener('submit', function(event) {
-        var rol = document.getElementById('rol').value;
-        var rolesValidos = ['administrador', 'cajero', 'mesero'];
 
-        if (!rolesValidos.includes(rol)) {
-            alert('Selecciona un rol válido.');
-            event.preventDefault(); // Evita que el formulario se envíe si el rol no es válido.
-        }
+    <!-- JavaScript para verificar la longitud de la contraseña y cambiar el botón de color -->
+    <script src="recursos/js/login.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var passwordInput = document.getElementById('txt_pass');
+        var submitButton = document.querySelector('button[type="submit"]');
+
+        passwordInput.addEventListener('input', function() {
+            var password = passwordInput.value;
+
+            if (password.length >= 6) {
+                submitButton.style.backgroundColor = '#28a745'; // Cambia el color del botón a verde
+                submitButton.style.borderColor = '#28a745';
+                submitButton.style.color = 'white';
+            } else {
+                submitButton.style.backgroundColor = '#e84601'; // Cambia el color del botón de vuelta a rojo
+                submitButton.style.borderColor = '#e84601';
+                submitButton.style.color = 'white';
+            }
+        });
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var password = passwordInput.value;
+
+            if (password.length < 6) {
+                alert('La contraseña debe tener al menos 6 caracteres.');
+                event.preventDefault();
+            }
+        });
     });
 </script>
 </body>

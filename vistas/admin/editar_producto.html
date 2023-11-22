@@ -25,16 +25,13 @@
                 <div class="form-group">
                     <label for="cantidad">Cantidad:</label>
                     <input type="number" id="cantidad" name="cantidad" class="form-control" required min="0" max="50">
-                </div>
-                <div class="form-group">
-                    <label for="ubicacion_sede"> Sede ID:</label>
-                    <select id="ubicacion_sede" name="ubicacion_sede" class="form-control" required>
-                        <option value="1">Sede ID: 1</option>
-                        <option value="2">Sede ID: 2</option>
-                        <option value="3">Sede ID: 3</option>
-                        <option value="4">Sede ID: 4</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="ubicacion_sede"> Sede ID:</label>
+                        <select id="ubicacion_sede" name="ubicacion_sede" class="form-control" required>
+                            <!-- Las opciones se cargarán dinámicamente aquí -->
+                        </select>
+                        <small id="error-sedes" class="form-text text-danger"></small>
+                    </div>
                 <div class="form-group">
                     <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
                     <input type="date" id="fecha_vencimiento" name="fecha_vencimiento" class="form-control" required>
@@ -64,19 +61,53 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+            // Petición AJAX para obtener las sedes desde el archivo PHP
+            $.ajax({
+                url: '../../controladores/obtener_sedes.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // Llenar las opciones del campo de selección con los datos obtenidos
+                    var select = $('#ubicacion_sede');
+                    select.empty();
+                    $.each(data, function (key, value) {
+                        select.append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                    });
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error en la petición AJAX:", textStatus, errorThrown);
+    
+                    // Mostrar mensajes de error específicos en el formulario
+                    if (xhr.status === 404) {
+                        $('#error-sedes').text('Error: Archivo no encontrado.');
+                    } else if (xhr.status === 500) {
+                        $('#error-sedes').text('Error interno del servidor. Por favor, inténtelo de nuevo más tarde.');
+                    } else {
+                        $('#error-sedes').text('Error desconocido. Por favor, revise la consola del navegador para más detalles.');
+                    }
+                },
+                complete: function (xhr, status) {
+                    console.log("Petición completada con estado:", status);
+                }
+            });
+    
             // Restricción de solo números en los campos id, cantidad y precio
-            $('#id, #cantidad, #precio').on('input', function() {
+            $('#id, #cantidad, #precio').on('input', function () {
                 this.value = this.value.replace(/[^0-9.]/g, '');
             });
-
-// Detectar el evento de retroceso
-window.addEventListener('popstate', function(event) {
-    // Redirigir a admin.php cuando se detecta un retroceso
-    window.location.replace('admin.php');
-});
-
+    
+            // Detectar el evento de retroceso
+            window.addEventListener('popstate', function (event) {
+                // Redirigir a admin.php cuando se detecta un retroceso
+                window.location.replace('admin.php');
+            });
         });
     </script>
+     
 </body>
 </html>
+    
+    
+    
+    
