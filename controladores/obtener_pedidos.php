@@ -3,39 +3,28 @@
 include(__DIR__ . '/../configuracion/conexion.php');
 
 // Verifica si la conexión se realizó con éxito
-if ($conexion) {
-    // Consulta para obtener la lista de pedidos
-    $sql = "SELECT * FROM pedidos";
-    $result = $conexion->query($sql);
-
-    if ($result->num_rows > 0) {
-        echo "<table border='1'>";
-        echo "<tr>";
-        echo "<th>ID</th>";
-        echo "<th>Nombre del Producto</th>";
-        echo "<th>Cantidad</th>";
-        echo "<th>Precio</th>";
-        echo "<th>Estado</th>";
-        echo "</tr>";
-
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . $row["id"] . "</td>";
-            echo "<td>" . $row["nombre_producto"] . "</td>";
-            echo "<td>" . $row["cantidad"] . "</td>";
-            echo "<td>" . $row["precio"] . "</td>";
-            echo "<td>" . $row["estado"] . "</td>";
-            echo "</tr>";
-        }
-
-        echo "</table>";
-    } else {
-        echo "No se encontraron pedidos en la base de datos.";
-    }
-
-    // Cierra la conexión a la base de datos
-    $conexion->close();
-} else {
-    echo "Error en la conexión a la base de datos.";
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
+
+// Consulta para obtener los pedidos
+$sql = "SELECT * FROM pedidos";
+$resultado = $conexion->query($sql);
+
+if ($resultado->num_rows > 0) {
+    // Construir la tabla de pedidos
+    while ($fila = $resultado->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $fila['id'] . "</td>";
+        echo "<td>" . $fila['nombre_producto'] . "</td>";
+        echo "<td>" . $fila['cantidad'] . "</td>";
+        echo "<td>" . $fila['precio'] . "</td>";
+        echo "<td>" . $fila['estado'] . "</td>";
+        echo "</tr>";
+    }
+} else {
+    echo '<tr><td colspan="5">No se encontraron pedidos en la base de datos.</td></tr>';
+}
+
+$conexion->close();
 ?>

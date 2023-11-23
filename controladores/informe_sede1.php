@@ -4,35 +4,34 @@ include(__DIR__ . '/../configuracion/conexion.php');
 
 // Verifica si la conexión se realizó con éxito
 if ($conexion) {
-    // Consulta para obtener los productos e información de las mesas de la sede con ID 1
-    $sede_id = 1; // ID de la sede que deseas mostrar
-    $sql = "SELECT id, nombre_producto, cantidad, sede_id, fecha_vencimiento, precio, estado FROM inventario WHERE sede_id = $sede_id
-            UNION
-            SELECT id, nombre_producto, cantidad, sede_id, fecha_vencimiento, precio, estado FROM inventario WHERE id_sede = $sede_id";
-    
+
+    // Consulta SQL para obtener el inventario con el ID de sede igual a 1 y el nombre de la sede
+    $sql = "SELECT inventario.nombre_producto, inventario.cantidad, inventario.descripcion, inventario.fecha_vencimiento, inventario.precio, inventario.estado, sedes.nombre as nombre_sede
+            FROM inventario
+            INNER JOIN sedes ON inventario.sede_id = sedes.id
+            WHERE inventario.sede_id = 1";
+
     $result = $conexion->query($sql);
 
-    if ($result) {
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                // Imprimir los detalles del producto o mesa
-                echo "<tr>";
-                echo "<td>" . $row["nombre_producto"] . "</td>";
-                echo "<td>" . $row["cantidad"] . "</td>";
-                echo "<td>" . $row["sede_id"] . "</td>"; // Cambiado de ubicacion_sede a sede_id
-                echo "<td>" . $row["fecha_vencimiento"] . "</td>";
-                echo "<td>" . $row["precio"] . "</td>";
-                echo "<td>" . $row["estado"] . "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='6'>No se encontraron productos o mesas en la sede con ID $sede_id.</td></tr>";
+    // Verificar si se encontraron resultados
+    if ($result->num_rows > 0) {
+        // Poblar la tabla en HTML con los resultados
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row["nombre_producto"] . "</td>";
+            echo "<td>" . $row["cantidad"] . "</td>";
+            echo "<td>" . $row["descripcion"] . "</td>";
+            echo "<td>" . $row["fecha_vencimiento"] . "</td>";
+            echo "<td>" . $row["precio"] . "</td>";
+            echo "<td>" . $row["estado"] . "</td>";
+            echo "</tr>";
         }
     } else {
-        echo "No se encontraron mesas en la base de datos.";
+        // Si no se encontraron productos en la sede seleccionada
+        echo '<tr><td colspan="6">No se encontraron productos en la sede seleccionada.</td></tr>';
     }
 
-    // Cierra la conexión a la base de datos
+    // Cerrar la conexión
     $conexion->close();
 } else {
     echo "Error en la conexión a la base de datos.";

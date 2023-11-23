@@ -33,7 +33,7 @@ if (!verificarRol('mesero')) {
                         </a>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <button id="cancelarPedido" class="btn btn-primary btn-block">Cancelar Pedido</button>
+                    <button id="cancelarPedido" class="btn btn-primary btn-block">Cancelar Pedido</button>
                     </div>
                     <div class="col-md-4 mb-3">
                         <button id="confirmarPedido" class="btn btn-primary btn-block">Confirmar Pedido</button>

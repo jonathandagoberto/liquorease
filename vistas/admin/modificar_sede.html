@@ -12,19 +12,42 @@
         <div class="admin-container">
             <form action="../../controladores/modificacion_sede.php" method="post">
                 <div class="form-group">
-            <label for="sede_id">Seleccione la sede a modificar:</label>
-            <select name="sede_id" id="sede_id">
-                <option value="1">Sede 1</option>
-                <option value="2">Sede 2</option>
-                <option value="3">Sede 3</option>
-                <option value="4">Sede 4</option>
-            </select>
-            <br>
-            <label for="nuevo_nombre">Nuevo nombre:</label>
-            <input type="text" name="nuevo_nombre" id="nuevo_nombre">
-            <br>
-            <input type="submit" value="Modificar">
-        </form>
+                    <label for="sede_id">Seleccione la sede a modificar:</label>
+                    <select name="sede_id" id="sede_id">
+                        <!-- Las opciones se cargarán dinámicamente aquí -->
+                    </select>
+                    <br>
+                    <label for="nuevo_nombre">Nuevo nombre:</label>
+                    <input type="text" name="nuevo_nombre" id="nuevo_nombre">
+                    <br>
+                    <input type="submit" value="Modificar">
+                </div>
+            </form>
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Petición AJAX para obtener las sedes desde el archivo PHP
+            $.ajax({
+                url: '../../controladores/obtener_sedes.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Llenar las opciones del campo de selección con los datos obtenidos
+                    var select = $('#sede_id');
+                    select.empty();
+                    $.each(data, function(key, value) {
+                        select.append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                    });
+                },
+                complete: function(xhr, status) {
+                    console.log("Petición completada con estado:", status);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+

@@ -9,24 +9,14 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="main-title">Inventario por Sede - <span id="sedeNombre">Nombre de la Sede</span></h1>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="sedeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Selecciona una Sede
-            </button>
-            <div class="dropdown-menu" aria-labelledby="sedeDropdown">
-                <?php foreach ($sedes as $sede) { ?>
-                    
-                <?php } ?>
-            </div>
-        </div>
+        <h1 class="main-title"> - <span id="sedeNombre"></span></h1>
         <div class="crema-container">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Nombre del Producto</th>
                         <th>Cantidad</th>
-                        <th>Ubicación en Sede</th>
+                        <th>Descripción</th>
                         <th>Fecha de Vencimiento</th>
                         <th>Precio</th>
                         <th>Estado</th>
@@ -38,26 +28,36 @@
             </table>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function verSede(sedeId, sedeNombre) {
-            // Actualizar el nombre de la sede en el título
-            $('#sedeNombre').text(sedeNombre);
+        async function verSede(sedeId, sedeNombre) {
+            try {
+                // Actualizar el nombre de la sede en el título
+                $('#sedeNombre').text(sedeNombre);
 
-            // Realizar una solicitud Ajax para obtener los datos del inventario de la sede seleccionada
-            $.ajax({
-                url: '../../controladores/informe_sede1.php?sedeId=' + sedeId, // Ruta al archivo PHP con el ID de la sede
-                method: 'GET',
-                success: function(data) {
-                    // Insertar los datos en la tabla
-                    $('#inventario-body').html(data);
-                },
-                error: function() {
-                    $('#inventario-body').html('<tr><td colspan="6">No se encontraron productos en la sede seleccionada.</td></tr>');
-                }
-            });
+                // Realizar una solicitud Ajax para obtener los datos del inventario de la sede seleccionada
+                const response = await fetch(`../../controladores/informe_sede1.php?sedeId=${sedeId}`);
+                const data = await response.text();
+
+                // Insertar los datos en la tabla
+                $('#inventario-body').html(data || '<tr><td colspan="6">No se encontraron productos en la sede seleccionada.</td></tr>');
+            } catch (error) {
+                console.error('Error al obtener datos del inventario:', error);
+                $('#inventario-body').html('<tr><td colspan="6">Error al obtener datos del inventario.</td></tr>');
+            }
         }
+
+        // Llamar a la función para cargar el inventario al cargar la página (puedes modificar según tus necesidades)
+        $(document).ready(function () {
+            const sedeId = 1; // ID de la sede por defecto
+            const sedeNombre = 'Id sede: 1'; // Nombre de la sede por defecto
+            verSede(sedeId, sedeNombre);
+        });
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+
