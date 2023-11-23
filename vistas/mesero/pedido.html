@@ -94,7 +94,7 @@
                     <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Cantidad" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Agregar al Pedido</button>
+                    <button name="form-pedido"  type="submit" class="btn btn-primary" id="form-pedido">Agregar al Pedido</button>
                 </div>
             </form>
 
@@ -106,6 +106,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+
     
             // Realizar una solicitud Ajax para obtener las sedes
             $.ajax({
@@ -171,10 +172,11 @@
                 this.value = this.value.replace(/[^0-9]/g, ''); // Elimina caracteres no numéricos
             });
     
+            //quien llama a
             // Manejar el envío del formulario de pedido
             $('#form-pedido').submit(function (e) {
-                e.preventDefault();
-    
+                //e.preventDefault();
+
                 // Realizar una solicitud Ajax para procesar el pedido
                 $.ajax({
                     url: '../../controladores/procesar_pedido.php',
