@@ -43,54 +43,55 @@ if (!verificarRol('mesero')) {
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- Include the full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
-<!-- Agrega este script después de incluir las bibliotecas de jQuery y Bootstrap -->
-<script>
-    document.getElementById('cancelarPedido').addEventListener('click', CancelarPedido);
-    document.getElementById('confirmarPedido').addEventListener('click', ConfirmarPedido);
+    <!-- Your custom script -->
+    <script>
+        document.getElementById('cancelarPedido').addEventListener('click', CancelarPedido);
+        document.getElementById('confirmarPedido').addEventListener('click', ConfirmarPedido);
 
-    function CancelarPedido() {
-        // Realiza una petición AJAX al servidor para cancelar el pedido
-        $.ajax({
-            url: '../../controladores/cancelar_pedido.php', // Ruta del controlador que maneja la cancelación
-            method: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    alert('Pedido cancelado exitosamente');
-                    // Actualiza la interfaz o redirige según sea necesario
-                } else {
-                    alert('Error al cancelar el pedido');
+        function CancelarPedido() {
+            // Realiza una petición AJAX al servidor para cancelar el pedido
+            $.ajax({
+                url: '../../controladores/cancelar_pedido.php', // Ruta del controlador que maneja la cancelación
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        alert('Pedido cancelado exitosamente');
+                        // Actualiza la interfaz o redirige según sea necesario
+                    } else {
+                        alert('Error al cancelar el pedido');
+                    }
+                },
+                error: function() {
+                    alert('Error de conexión');
                 }
-            },
-            error: function() {
-                alert('Error de conexión');
-            }
-        });
-    }
+            });
+        }
 
-    function ConfirmarPedido() {
-        // Realiza una petición AJAX al servidor para confirmar el pedido
-        $.ajax({
-            url: '../../controladores/confirmar_pedido.php', // Ruta del controlador que maneja la confirmación
-            method: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    alert('Pedido confirmado exitosamente');
-                    // Actualiza la interfaz o redirige según sea necesario
-                } else {
-                    alert('Error al confirmar el pedido');
+        function ConfirmarPedido() {
+            // Realiza una petición AJAX al servidor para confirmar el pedido
+            $.ajax({
+                url: '../../controladores/confirmar_pedido.php', // Ruta del controlador que maneja la confirmación
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        alert('Pedido confirmado exitosamente');
+                        // Actualiza la interfaz o redirige según sea necesario
+                    } else {
+                        alert('Error al confirmar el pedido');
+                    }
+                },
+                error: function() {
+                    alert('Error de conexión');
                 }
-            },
-            error: function() {
-                alert('Error de conexión');
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 </body>
 </html>

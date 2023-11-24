@@ -121,6 +121,9 @@ $conexion->close();
     function crearInformeInventario() {
         window.location.href = 'informe_actual.html';
     }
+    function generarInformeVentas() {
+        window.location.href = 'informe_venta.html';
+    }
 </script>
 </body>
 </html>

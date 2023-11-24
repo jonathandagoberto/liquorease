@@ -46,17 +46,12 @@ $conexion->close();
     <div class="admin-container">
         <div class="admin-buttons">
             <div class="row">
-                <div class="col-md-4">
-                    <button onclick="generarInformeVentas()" class="btn">Generar Informe de Ventas</button>
-                </div>
-                <div class="col-md-4">
-                    <button onclick="crearInformeInventario()" class="btn">Crear Informe de Inventario</button>
-                </div>
-                <div class="col-md-4">
-                    <a href="pedido.html">
-                        <button class="btn btn-primary">Tomar Pedido</button>
-                    </a>
-                </div>
+            <div class="col-md-4">
+                        <button onclick="generarInformeVentas()" class="btn btn-primary">Generar Informe de Ventas</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button onclick="crearInformeInventario()" class="btn btn-primary">Crear Informe de Inventario</button>
+                    </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -73,16 +68,16 @@ $conexion->close();
                 </div>
                 <div class="col-md-4">
                     <div class="btn-group">
-                        <button type="button" class="btn">Gestionar Sedes</button>
-                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
-                            <?php foreach ($sedes as $sede) { ?>
-                                <a class="dropdown-item" href="#" onclick="verSede(<?php echo $sede['id']; ?>)"><?php echo $sede['nombre']; ?></a>
-                            <?php } ?>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-primary">Gestionar Sedes</button>
+    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu" style="background-color: rgb(220, 228, 249);">
+        <?php foreach ($sedes as $sede) { ?>
+            <a class="dropdown-item" href="#" onclick="verSede(<?php echo $sede['id']; ?>)"><?php echo $sede['nombre']; ?></a>
+        <?php } ?>
+    </div>
+</div>
                 </div>
                 <div class="col-md-4">
                     <div class="btn-group">
@@ -106,8 +101,16 @@ $conexion->close();
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
+        function verSede(idSede) {
+        // Construir la URL dinámicamente usando el ID de la sede
+        var url = 'sede' + idSede + '.html';
+        window.location.href = url;
+    }    
     function crearInformeInventario() {
         window.location.href = 'informe_actual.html';
+    }
+    function generarInformeVentas() {
+        window.location.href = 'informe_venta.html';
     }
 </script>
 </body>

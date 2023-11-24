@@ -1,7 +1,8 @@
 <?php
+// Incluye el archivo de conexión utilizando la ruta relativa
 include(__DIR__ . '/../configuracion/conexion.php');
 
-if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Utiliza transacciones para asegurar la consistencia de la base de datos
     mysqli_autocommit($conexion, false);
     

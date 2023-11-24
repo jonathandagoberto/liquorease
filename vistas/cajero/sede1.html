@@ -37,7 +37,7 @@
                 $('#sedeNombre').text(sedeNombre);
 
                 // Realizar una solicitud Ajax para obtener los datos del inventario de la sede seleccionada
-                const response = await fetch(`../../controladores/informe_sede4.php?sedeId=${sedeId}`);
+                const response = await fetch(`../../controladores/informe_sede1.php?sedeId=${sedeId}`);
                 const data = await response.text();
 
                 // Insertar los datos en la tabla
@@ -50,11 +50,14 @@
 
         // Llamar a la función para cargar el inventario al cargar la página (puedes modificar según tus necesidades)
         $(document).ready(function () {
-            const sedeId = 4; // ID de la sede por defecto (cambiado a 2)
-            const sedeNombre = 'Id sede: 4'; // Nombre de la sede por defecto (cambiado a 2)
+            const sedeId = 1; // ID de la sede por defecto
+            const sedeNombre = 'Id sede: 1'; // Nombre de la sede por defecto
             verSede(sedeId, sedeNombre);
         });
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+

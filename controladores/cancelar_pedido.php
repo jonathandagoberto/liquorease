@@ -1,35 +1,39 @@
 <?php
+// Incluye el archivo de conexión utilizando la ruta relativa
 include(__DIR__ . '/../configuracion/conexion.php');
 
-if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
-    // Utiliza transacciones para asegurar la consistencia de la base de datos
-    mysqli_autocommit($conexion, false);
-    
-    // Realiza operaciones de cancelación en la base de datos
-    $query_insert = "INSERT INTO informe_ventas (nombre_producto, cantidad, precio, fecha_venta)
-                     SELECT nombre_producto, cantidad, precio, NOW() FROM pedidos WHERE estado = 'pendiente'";
-    
-    $query_delete = "DELETE FROM pedidos WHERE estado = 'pendiente'";
-    
-    $result_insert = mysqli_query($conexion, $query_insert);
-    $result_delete = mysqli_query($conexion, $query_delete);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        // Obtén los detalles del pedido desde la tabla pedidos
+        $query = "SELECT id, nombre_producto, cantidad FROM pedidos WHERE estado = 'pendiente'";
+        $result = $conexion->query($query);
 
-    // Verifica si las consultas fueron exitosas
-    if ($result_insert && $result_delete) {
-        mysqli_commit($conexion);
-        $response['success'] = true;
-    } else {
-        mysqli_rollback($conexion);
-        $response['success'] = false;
-        $response['error'] = mysqli_error($conexion);
+        // Mueve los productos cancelados a la tabla inventario
+        while ($row = $result->fetch_assoc()) {
+            $idPedido = $row['id'];
+            $nombreProducto = $row['nombre_producto'];
+            $cantidad = $row['cantidad'];
+
+            // Actualiza la cantidad en la tabla inventario
+            $updateInventarioQuery = "UPDATE inventario SET cantidad = cantidad + $cantidad WHERE nombre_producto = '$nombreProducto'";
+            $conexion->query($updateInventarioQuery);
+        }
+
+        // Borra los registros de la tabla pedidos
+        $deletePedidosQuery = "DELETE FROM pedidos WHERE estado = 'pendiente'";
+        $conexion->query($deletePedidosQuery);
+
+        // Responde con éxito
+        $response = array('success' => true);
+        echo json_encode($response);
+    } catch (Exception $e) {
+        // Maneja errores
+        $response = array('success' => false, 'error' => $e->getMessage());
+        echo json_encode($response);
     }
-
-    mysqli_autocommit($conexion, true);
-
-    header('Content-Type: application/json');
-    echo json_encode($response);
 } else {
-    header('Location: ../pagina_de_error.php');
+    // Si no es una solicitud POST, redirige o muestra un mensaje de error
+    header('Location: ../../pagina_de_error.php');
     exit();
 }
 ?>

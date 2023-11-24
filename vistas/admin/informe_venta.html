@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de Ventas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../recursos/css/style.css">
+    <style></style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">Informe de Ventas</h1>
+        <div class="crema-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Fecha de Venta</th>
+                    </tr>
+                </thead>
+                <tbody id="ventas-body">
+                    <!-- Aquí se generará la lista de productos con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Realizar una solicitud Ajax para obtener los datos de informe_ventas
+            $.ajax({
+                url: '../../controladores/informe_inventario.php', // Ruta al archivo PHP para informe_ventas
+                method: 'GET',
+                success: function(data) {
+                    // Insertar los datos en la tabla
+                    $('#ventas-body').html(data);
+                },
+                error: function() {
+                    $('#ventas-body').html('<tr><td colspan="5">No se encontraron ventas.</td></tr>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
